@@ -33,6 +33,10 @@ Route::get('/product-images/{path}', function ($path) {
     return response()->file($fullPath);
 })->where('path', '.*');
 
+// Client Vitamin Planner Routes
+Route::get('/planner/{code}', [App\Http\Controllers\VitaminPlannerController::class, 'show'])->name('planner.show');
+Route::get('/planner/{code}/export', [App\Http\Controllers\VitaminPlannerController::class, 'exportIcs'])->name('planner.export');
+
 // Admin Authentication Routes
 Route::get('admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('admin.login.submit');
@@ -46,4 +50,8 @@ Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function
     Route::patch('products/{product}/quick-update', [AdminProductController::class, 'quickUpdate'])->name('products.quick-update');
     Route::patch('products/{product}/update-image', [AdminProductController::class, 'updateImage'])->name('products.update-image');
     Route::resource('products', AdminProductController::class)->except(['create', 'edit', 'store']);
+    
+    Route::get('planner', [App\Http\Controllers\Admin\VitaminPlannerController::class, 'index'])->name('planner.index');
+    Route::post('planner', [App\Http\Controllers\Admin\VitaminPlannerController::class, 'store'])->name('planner.store');
+    Route::delete('planner/{planner}', [App\Http\Controllers\Admin\VitaminPlannerController::class, 'destroy'])->name('planner.destroy');
 });

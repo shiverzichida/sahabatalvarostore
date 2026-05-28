@@ -66,6 +66,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('admin.planner.index') }}" class="nav-link {{ request()->is('admin/planner*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Planner Vitamin</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ url('/') }}" target="_blank" class="nav-link">
               <i class="nav-icon fas fa-globe"></i>
               <p>Lihat Website</p>

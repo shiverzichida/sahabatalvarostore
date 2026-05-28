@@ -20,9 +20,15 @@ $repo_path = '/home/lint2571/repositories/sahabatalvarostore';
 $public_path = '/home/lint2571/public_html/sahabatalvaro.store';
 
 // 1. Tarik perubahan terbaru dari GitHub ke folder repository cPanel
-$output_pull = shell_exec("cd $repo_path && git pull origin main 2>&1");
-echo "=== GIT PULL ===\n";
-echo htmlspecialchars($output_pull) . "\n";
+$output_pull = '';
+if (!isset($_GET['skip_pull'])) {
+    $output_pull = shell_exec("cd $repo_path && git pull origin main 2>&1");
+    echo "=== GIT PULL ===\n";
+    echo htmlspecialchars($output_pull) . "\n";
+} else {
+    echo "=== GIT PULL SKIPPED ===\n";
+    $output_pull = 'Already up to date'; // bypass file copy checks if pull is skipped
+}
 
 // 2. Salin semua file dari repository ke public_html (sesuai instruksi cpanel.yml)
 if (strpos($output_pull, 'Already up to date') === false || isset($_GET['force']) || isset($_GET['clear_cache'])) {
