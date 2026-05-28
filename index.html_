@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Dummy Contoh</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header {
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Selamat Datang di Halaman Dummy</h1>
+        </header>
+
+        <section>
+            <h2>Tentang Proyek Ini</h2>
+            <p>Ini adalah contoh struktur HTML dasar yang digunakan sebagai kerangka awal pengembangan web. Kamu bisa menambahkan elemen lain seperti gambar, tabel, atau form di sini.</p>
+        </section>
+
+        <section>
+            <h2>Daftar Contoh</h2>
+            <ul>
+                <li>Item List Pertama</li>
+                <li>Item List Kedua</li>
+                <li>Item List Ketiga</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Interaksi Sederhana</h2>
+            <p>Coba klik tombol di bawah ini:</p>
+            <button onclick="alert('Halo! Kamu baru saja mengklik tombol dummy.')">
+                Klik Saya
+            </button>
+        </section>
+
+        <footer style="margin-top: 40px; font-size: 0.8em; color: #666;">
+            <p>&copy; 2026 Latihan Coding. Dibuat dengan antusiasme.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
