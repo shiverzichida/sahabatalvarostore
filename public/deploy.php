@@ -41,7 +41,7 @@ if (strpos($output_pull, 'Already up to date') === false || isset($_GET['force']
     echo htmlspecialchars($output_cache) . "\n";
 } else {
     echo "Tidak ada file baru untuk disalin (Sudah up-to-date).\n";
-    if (isset($_GET['clear_cache'])) {
+    if (isset($_GET['clear_cache']) || isset($_GET['migrate'])) {
         echo "=== CLEARING CACHE ===\n";
         $output_cache = shell_exec("php $public_path/artisan route:clear 2>&1");
         $output_cache .= shell_exec("php $public_path/artisan view:clear 2>&1");
@@ -49,6 +49,13 @@ if (strpos($output_pull, 'Already up to date') === false || isset($_GET['force']
         $output_cache .= shell_exec("php $public_path/artisan cache:clear 2>&1");
         echo htmlspecialchars($output_cache) . "\n";
     }
+}
+
+// 3. Jalankan Migrasi Database jika ada parameter &migrate=1
+if (isset($_GET['migrate'])) {
+    echo "=== RUNNING DATABASE MIGRATIONS ===\n";
+    $output_migrate = shell_exec("php $public_path/artisan migrate --force 2>&1");
+    echo htmlspecialchars($output_migrate) . "\n";
 }
 
 echo "\nDeployment Selesai!";
