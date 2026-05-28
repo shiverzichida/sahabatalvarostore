@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/lint2571/public_html/
+    - export DEPLOYPATH=/home/lint2571/public_html/sahabatalvaro.store/
     - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH 2>/dev/null; true
     - /bin/cp .env $DEPLOYPATH 2>/dev/null; true

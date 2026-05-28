@@ -17,7 +17,7 @@ echo "Memulai auto-deployment...\n\n";
 
 // Path repository dan path public_html Anda
 $repo_path = '/home/lint2571/repositories/sahabatalvarostore';
-$public_path = '/home/lint2571/public_html';
+$public_path = '/home/lint2571/public_html/sahabatalvaro.store';
 
 // 1. Tarik perubahan terbaru dari GitHub ke folder repository cPanel
 $output_pull = shell_exec("cd $repo_path && git pull origin main 2>&1");
