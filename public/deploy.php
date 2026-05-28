@@ -25,14 +25,30 @@ echo "=== GIT PULL ===\n";
 echo htmlspecialchars($output_pull) . "\n";
 
 // 2. Salin semua file dari repository ke public_html (sesuai instruksi cpanel.yml)
-if (strpos($output_pull, 'Already up to date') === false || isset($_GET['force'])) {
+if (strpos($output_pull, 'Already up to date') === false || isset($_GET['force']) || isset($_GET['clear_cache'])) {
     echo "=== COPYING FILES ===\n";
     $output_cp = shell_exec("cp -R $repo_path/* $public_path/ 2>&1");
     $output_htaccess = shell_exec("cp $repo_path/.htaccess $public_path/ 2>&1");
     
     echo "Files copied successfully.\n";
+
+    // Clear Laravel Cache
+    echo "=== CLEARING CACHE ===\n";
+    $output_cache = shell_exec("php $public_path/artisan route:clear 2>&1");
+    $output_cache .= shell_exec("php $public_path/artisan view:clear 2>&1");
+    $output_cache .= shell_exec("php $public_path/artisan config:clear 2>&1");
+    $output_cache .= shell_exec("php $public_path/artisan cache:clear 2>&1");
+    echo htmlspecialchars($output_cache) . "\n";
 } else {
     echo "Tidak ada file baru untuk disalin (Sudah up-to-date).\n";
+    if (isset($_GET['clear_cache'])) {
+        echo "=== CLEARING CACHE ===\n";
+        $output_cache = shell_exec("php $public_path/artisan route:clear 2>&1");
+        $output_cache .= shell_exec("php $public_path/artisan view:clear 2>&1");
+        $output_cache .= shell_exec("php $public_path/artisan config:clear 2>&1");
+        $output_cache .= shell_exec("php $public_path/artisan cache:clear 2>&1");
+        echo htmlspecialchars($output_cache) . "\n";
+    }
 }
 
 echo "\nDeployment Selesai!";
