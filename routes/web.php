@@ -33,8 +33,13 @@ Route::get('/product-images/{path}', function ($path) {
     return response()->file($fullPath);
 })->where('path', '.*');
 
+// Admin Authentication Routes
+Route::get('admin/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('admin.logout');
+
 // Admin Routes (AdminLTE)
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('admin.auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('products/batch-store', [AdminProductController::class, 'batchStore'])->name('products.batch-store');
     Route::get('products/{product}/duplicate', [AdminProductController::class, 'duplicate'])->name('products.duplicate');

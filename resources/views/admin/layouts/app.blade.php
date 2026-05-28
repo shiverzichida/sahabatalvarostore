@@ -71,6 +71,15 @@
               <p>Lihat Website</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
+            </a>
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+          </li>
         </ul>
       </nav>
     </div>
