@@ -18,6 +18,7 @@ Route::get('/tentang-kami/visi-misi', [AboutController::class, 'visionMission'])
 Route::get('/verifikasi-produk', [VerificationController::class, 'index'])->name('verification.index');
 Route::post('/verifikasi-produk', [VerificationController::class, 'check'])->name('verification.check');
 
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/category/{slug}', [ProductController::class, 'category'])->name('product.category');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 

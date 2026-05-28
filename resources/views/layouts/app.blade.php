@@ -403,10 +403,13 @@
 
                             <!-- Products Dropdown -->
                             <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
-                                <span>Produk</span>
-                                <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                <a href="{{ route('product.index') }}" class="flex items-center">
+                                    <span>Produk</span>
+                                    <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </a>
                                 <div class="absolute left-0 top-full mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                     <div class="py-1">
+                                        <a href="{{ route('product.index') }}" class="block px-4 py-2 text-sm font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-100">Semua Produk</a>
                                         @foreach(\App\Models\Category::all() as $category)
                                             <a href="{{ route('product.category', $category->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ $category->name }}</a>
                                         @endforeach
@@ -449,6 +452,7 @@
                 <a href="{{ url('/') }}">Beranda</a>
                 <a href="{{ route('about.summary') }}">Ringkasan Perusahaan</a>
                 <a href="{{ route('about.vision_mission') }}">Visi & Misi</a>
+                <a href="{{ route('product.index') }}" style="font-weight: 600;">Semua Produk</a>
                 @foreach(\App\Models\Category::all() as $category)
                     <a href="{{ route('product.category', $category->slug) }}">{{ $category->name }}</a>
                 @endforeach

@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        $products = Product::with('category')
+            ->where('is_active', true)
+            ->latest()
+            ->paginate(12);
+        $categories = Category::all();
+        
+        return view('products.index', compact('products', 'categories'));
+    }
+
     public function show($slug)
     {
         $product = Product::with('category')->where('slug', $slug)->firstOrFail();
