@@ -45,7 +45,7 @@ class VitaminPlannerController extends Controller
             'dosage' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'required_unless:frequency,once|nullable|date|after_or_equal:start_date',
-            'frequency' => 'required|string|in:once,daily,every_other_day,twice_weekly',
+            'frequency' => 'required|string|in:once,daily,every_other_day,once_weekly,monday_thursday,tuesday_friday,twice_weekly',
             'days_of_week' => 'nullable|array',
             'notes' => 'nullable|string',
             'request_id' => 'nullable|exists:schedule_requests,id', // Untuk update status request

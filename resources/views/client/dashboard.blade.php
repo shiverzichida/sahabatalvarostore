@@ -342,26 +342,34 @@
                 <h3>Minta Jadwal Vitamin</h3>
                 <form action="{{ route('client.request.store') }}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <label class="form-label" for="vitamin_select">Pilih Vitamin / Suplemen</label>
-                        <select class="input-control" id="vitamin_select" name="vitamin_select" required>
-                            <option value="">-- Pilih Suplemen --</option>
-                            @foreach($products as $prod)
-                                <option value="{{ $prod->name }}">{{ $prod->name }}</option>
-                            @endforeach
-                            <option value="__manual__">Lainnya (Tulis manual...)</option>
-                        </select>
+                    
+                    <div id="request-items-container">
+                        <div class="request-row mb-3" data-index="0" style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 12px; position: relative;">
+                            <button type="button" class="remove-row-btn" style="position: absolute; right: 12px; top: 12px; background: none; border: none; color: #ef4444; cursor: pointer; font-size: 20px; font-weight: 700; line-height: 1; display: none;">&times;</button>
+                            
+                            <div class="form-group mb-3" style="position: relative;">
+                                <label class="form-label">Nama Vitamin / Suplemen</label>
+                                <input type="text" name="items[0][vitamin_select]" class="input-control search-vitamin-input" placeholder="Ketik untuk mencari/mengisi..." autocomplete="off" required>
+                                <div class="suggestions-dropdown d-none" style="position: absolute; left: 0; right: 0; top: 100%; background: #1f2937; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; z-index: 999; max-height: 180px; overflow-y: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin-top: 4px;"></div>
+                                <!-- Field manual hidden default, tapi kita submit vitamin_select langsung sebagai nilainya -->
+                                <input type="hidden" name="items[0][vitamin_manual]" value="">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Dosis</label>
+                                <input type="text" name="items[0][dosage]" class="input-control" placeholder="Contoh: 500mg, 1 tablet, 1ml" required>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <label class="form-label">Catatan Tambahan (Optional)</label>
+                                <textarea name="items[0][notes]" class="input-control" rows="2" placeholder="Contoh: Tiap pagi sesudah makan"></textarea>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group d-none" id="manual-vitamin-group">
-                        <label class="form-label" for="vitamin_manual">Nama Vitamin / Suplemen (Manual)</label>
-                        <input class="input-control" type="text" id="vitamin_manual" name="vitamin_manual" placeholder="Contoh: Vitamin C 500mg, Multivitamin">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="notes">Catatan / Kebutuhan</label>
-                        <textarea class="input-control" id="notes" name="notes" rows="3" placeholder="Contoh: Tolong jadwalkan dikonsumsi tiap pagi sesudah makan selama 30 hari."></textarea>
-                    </div>
+                    <button type="button" id="add-row-btn" class="submit-btn" style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.25); color: #60a5fa; margin-bottom: 16px; font-weight: 600;">
+                        + Tambah Vitamin Lain
+                    </button>
 
                     <button type="submit" class="submit-btn">Kirim Permintaan</button>
                 </form>
@@ -374,7 +382,7 @@
                     @forelse($requests as $req)
                         <div class="request-item">
                             <div class="request-info">
-                                <h4>{{ $req->vitamin_name }}</h4>
+                                <h4>{{ $req->vitamin_name }} @if($req->dosage)<span style="font-weight: 500; opacity: 0.8; font-size: 13px;">({{ $req->dosage }})</span>@endif</h4>
                                 <p>{{ $req->created_at->format('d M Y - H:i') }}</p>
                             </div>
                             <span class="status-badge {{ $req->status === 'approved' ? 'status-approved' : 'status-pending' }}">
@@ -422,19 +430,125 @@
         });
         calendar.render();
 
-        // Toggle form-group manual input vitamin
-        var selectEl = document.getElementById('vitamin_select');
-        if (selectEl) {
-            selectEl.addEventListener('change', function() {
-                var manualGroup = document.getElementById('manual-vitamin-group');
-                var manualInput = document.getElementById('vitamin_manual');
-                if (this.value === '__manual__') {
-                    manualGroup.classList.remove('d-none');
-                    manualInput.setAttribute('required', 'required');
+        // Autocomplete Catalog & Repeater logic
+        const catalogProducts = @json($products->pluck('name'));
+        let rowIndex = 0;
+
+        function initAutocomplete(row) {
+            const input = row.querySelector('.search-vitamin-input');
+            const dropdown = row.querySelector('.suggestions-dropdown');
+
+            input.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                dropdown.innerHTML = '';
+                
+                if (!query) {
+                    dropdown.classList.add('d-none');
+                    return;
+                }
+
+                const matches = catalogProducts.filter(p => p.toLowerCase().includes(query));
+
+                if (matches.length === 0) {
+                    dropdown.innerHTML = `
+                        <div class="suggestion-item" style="padding: 10px 14px; color: var(--text-muted); font-size: 13px; cursor: pointer;">
+                            Tidak ada di katalog (Ketik kustom)
+                        </div>
+                    `;
                 } else {
-                    manualGroup.classList.add('d-none');
-                    manualInput.removeAttribute('required');
-                    manualInput.value = '';
+                    matches.forEach(match => {
+                        const item = document.createElement('div');
+                        item.className = 'suggestion-item';
+                        item.style.padding = '10px 14px';
+                        item.style.fontSize = '13px';
+                        item.style.cursor = 'pointer';
+                        item.style.transition = 'background 0.2s';
+                        item.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+                        item.innerHTML = match.replace(new RegExp(query, 'gi'), m => `<strong>${m}</strong>`);
+                        
+                        item.addEventListener('mouseenter', () => item.style.backgroundColor = 'rgba(255,255,255,0.05)');
+                        item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
+                        
+                        item.addEventListener('click', function() {
+                            input.value = match;
+                            dropdown.classList.add('d-none');
+                        });
+                        dropdown.appendChild(item);
+                    });
+                }
+                dropdown.classList.remove('d-none');
+            });
+
+            // Sembunyikan dropdown saat klik di luar
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('d-none');
+                }
+            });
+
+            input.addEventListener('focus', function() {
+                if (this.value.trim().length > 0) {
+                    dropdown.classList.remove('d-none');
+                }
+            });
+        }
+
+        // Jalankan untuk baris pertama
+        const firstRow = document.querySelector('.request-row');
+        if (firstRow) initAutocomplete(firstRow);
+
+        // Tambah baris baru
+        document.getElementById('add-row-btn').addEventListener('click', function() {
+            rowIndex++;
+            const container = document.getElementById('request-items-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'request-row mb-3';
+            newRow.setAttribute('data-index', rowIndex);
+            newRow.style.cssText = 'background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 12px; position: relative;';
+            
+            newRow.innerHTML = `
+                <button type="button" class="remove-row-btn" style="position: absolute; right: 12px; top: 12px; background: none; border: none; color: #ef4444; cursor: pointer; font-size: 20px; font-weight: 700; line-height: 1;">&times;</button>
+                
+                <div class="form-group mb-3" style="position: relative;">
+                    <label class="form-label">Nama Vitamin / Suplemen</label>
+                    <input type="text" name="items[${rowIndex}][vitamin_select]" class="input-control search-vitamin-input" placeholder="Ketik untuk mencari/mengisi..." autocomplete="off" required>
+                    <div class="suggestions-dropdown d-none" style="position: absolute; left: 0; right: 0; top: 100%; background: #1f2937; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; z-index: 999; max-height: 180px; overflow-y: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin-top: 4px;"></div>
+                    <input type="hidden" name="items[${rowIndex}][vitamin_manual]" value="">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Dosis</label>
+                    <input type="text" name="items[${rowIndex}][dosage]" class="input-control" placeholder="Contoh: 500mg, 1 tablet, 1ml" required>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label class="form-label">Catatan Tambahan (Optional)</label>
+                    <textarea name="items[${rowIndex}][notes]" class="input-control" rows="2" placeholder="Contoh: Tiap pagi sesudah makan"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+            initAutocomplete(newRow);
+            updateRemoveButtons();
+        });
+
+        // Hapus baris
+        document.getElementById('request-items-container').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-row-btn')) {
+                const row = e.target.closest('.request-row');
+                row.remove();
+                updateRemoveButtons();
+            }
+        });
+
+        function updateRemoveButtons() {
+            const rows = document.querySelectorAll('.request-row');
+            rows.forEach(row => {
+                const btn = row.querySelector('.remove-row-btn');
+                if (rows.length > 1) {
+                    btn.style.display = 'block';
+                } else {
+                    btn.style.display = 'none';
                 }
             });
         }

@@ -12,6 +12,7 @@ class ScheduleRequest extends Model
     protected $fillable = [
         'user_id',
         'vitamin_name',
+        'dosage',
         'notes',
         'status',
     ];

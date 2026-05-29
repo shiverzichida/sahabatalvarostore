@@ -172,9 +172,12 @@
                         <label for="frequency">Frekuensi Konsumsi</label>
                         <select name="frequency" id="frequency" class="form-control" required>
                             <option value="once" {{ old('frequency') === 'once' ? 'selected' : '' }}>Hanya Sekali (Sekali Saja)</option>
-                            <option value="daily" {{ old('frequency') === 'daily' ? 'selected' : '' }}>Setiap Hari (Daily)</option>
-                            <option value="every_other_day" {{ old('frequency') === 'every_other_day' ? 'selected' : '' }}>Dua Hari Sekali (Every Other Day)</option>
-                            <option value="twice_weekly" {{ old('frequency') === 'twice_weekly' ? 'selected' : '' }}>Dua Kali Seminggu (Twice Weekly)</option>
+                            <option value="daily" {{ old('frequency') === 'daily' ? 'selected' : '' }}>Sehari Sekali</option>
+                            <option value="every_other_day" {{ old('frequency') === 'every_other_day' ? 'selected' : '' }}>Dua Hari Sekali</option>
+                            <option value="once_weekly" {{ old('frequency') === 'once_weekly' ? 'selected' : '' }}>Seminggu Sekali</option>
+                            <option value="monday_thursday" {{ old('frequency') === 'monday_thursday' ? 'selected' : '' }}>Senin dan Kamis</option>
+                            <option value="tuesday_friday" {{ old('frequency') === 'tuesday_friday' ? 'selected' : '' }}>Selasa dan Jumat</option>
+                            <option value="twice_weekly" {{ old('frequency') === 'twice_weekly' ? 'selected' : '' }}>Dua Kali Seminggu (Kustom Hari)</option>
                         </select>
                     </div>
 
@@ -208,7 +211,21 @@
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary btn-block">Simpan Jadwal</button>
                 </div>
-            </form>
+        </div>
+
+        <!-- Card Preview Tanggal -->
+        <div class="card card-outline card-info mt-3" id="calendar-preview-card" style="display:none; border-top: 3px solid #17a2b8;">
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold text-info"><i class="fas fa-calendar-alt"></i> Preview Tanggal Jadwal</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="p-3 bg-light border-bottom">
+                    <p class="text-muted mb-0" style="font-size: 13px;">Berikut adalah perkiraan tanggal konsumsi berdasarkan kriteria jadwal:</p>
+                </div>
+                <ul id="preview-dates-list" class="list-group list-group-flush" style="max-height: 250px; overflow-y: auto;">
+                    <!-- Javascript will render preview dates here -->
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -264,9 +281,15 @@
                                     @if($sched->frequency === 'once')
                                         Sekali Saja
                                     @elseif($sched->frequency === 'daily')
-                                        Setiap Hari
+                                        Sehari Sekali
                                     @elseif($sched->frequency === 'every_other_day')
                                         2 Hari Sekali
+                                    @elseif($sched->frequency === 'once_weekly')
+                                        Seminggu Sekali
+                                    @elseif($sched->frequency === 'monday_thursday')
+                                        Senin & Kamis
+                                    @elseif($sched->frequency === 'tuesday_friday')
+                                        Selasa & Jumat
                                     @elseif($sched->frequency === 'twice_weekly')
                                         2x Seminggu ({{ str_replace(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'], $sched->days_of_week) }})
                                     @endif
@@ -327,6 +350,7 @@ $(document).ready(function() {
             $('#days-selector').addClass('d-none');
             $('.day-checkbox').prop('checked', false);
         }
+        calculatePreviewDates();
     }
 
     // Toggle input Vitamin/Catalog
@@ -335,7 +359,6 @@ $(document).ready(function() {
         if (val === '__manual__') {
             $('#admin-manual-vitamin-group').removeClass('d-none');
             $('#vitamin_name').prop('readonly', false);
-            // Don't clear if it was prefilled by code
         } else if (val === '') {
             $('#admin-manual-vitamin-group').removeClass('d-none');
             $('#vitamin_name').val('');
@@ -347,10 +370,112 @@ $(document).ready(function() {
         }
     }
 
+    // Hitung Preview Tanggal Jadwal secara Real-time
+    function calculatePreviewDates() {
+        var startDateVal = $('#start_date').val();
+        var endDateVal = $('#end_date').val();
+        var freq = $('#frequency').val();
+
+        if (!startDateVal) {
+            $('#calendar-preview-card').hide();
+            return;
+        }
+
+        var start = new Date(startDateVal);
+        var end = endDateVal ? new Date(endDateVal) : new Date(startDateVal);
+        
+        start.setHours(0,0,0,0);
+        end.setHours(0,0,0,0);
+
+        var dates = [];
+        var maxOccurrences = 15;
+
+        if (freq === 'once') {
+            dates.push(new Date(start));
+        } else {
+            var curr = new Date(start);
+            var counter = 0;
+            
+            var checkedDays = [];
+            $('.day-checkbox:checked').each(function() {
+                checkedDays.push($(this).val());
+            });
+
+            var dayMap = {
+                'Sunday': 0, 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3,
+                'Thursday': 4, 'Friday': 5, 'Saturday': 6
+            };
+
+            while (curr <= end && dates.length < maxOccurrences) {
+                var shouldAdd = false;
+                var jsDay = curr.getDay();
+
+                if (freq === 'daily') {
+                    shouldAdd = true;
+                } else if (freq === 'every_other_day') {
+                    if (counter % 2 === 0) {
+                        shouldAdd = true;
+                    }
+                } else if (freq === 'once_weekly') {
+                    if (jsDay === start.getDay()) {
+                        shouldAdd = true;
+                    }
+                } else if (freq === 'monday_thursday') {
+                    if (jsDay === 1 || jsDay === 4) {
+                        shouldAdd = true;
+                    }
+                } else if (freq === 'tuesday_friday') {
+                    if (jsDay === 2 || jsDay === 5) {
+                        shouldAdd = true;
+                    }
+                } else if (freq === 'twice_weekly') {
+                    for (var i = 0; i < checkedDays.length; i++) {
+                        if (jsDay === dayMap[checkedDays[i]]) {
+                            shouldAdd = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldAdd) {
+                    dates.push(new Date(curr));
+                }
+                
+                curr.setDate(curr.getDate() + 1);
+                counter++;
+            }
+        }
+
+        var listHtml = '';
+        var dayNamesIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        
+        if (dates.length === 0) {
+            listHtml = '<li class="list-group-item text-danger py-2" style="font-size: 13px; text-align: center;">Tidak ada tanggal yang cocok.</li>';
+        } else {
+            dates.forEach(function(d) {
+                var dayName = dayNamesIndo[d.getDay()];
+                var dateString = d.getDate().toString().padStart(2, '0') + '/' + 
+                                 (d.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                                 d.getFullYear();
+                listHtml += '<li class="list-group-item d-flex justify-content-between align-items-center py-2" style="font-size: 13px; background: transparent; border-bottom: 1px solid rgba(0,0,0,0.05);">' +
+                            '<span>' + dateString + '</span>' +
+                            '<span class="badge badge-info">' + dayName + '</span>' +
+                            '</li>';
+            });
+            if (freq !== 'once' && dates.length >= maxOccurrences) {
+                listHtml += '<li class="list-group-item text-center text-muted py-2" style="font-size: 11px; background: rgba(0,0,0,0.02);">* Menampilkan 15 tanggal pertama</li>';
+            }
+        }
+
+        $('#preview-dates-list').html(listHtml);
+        $('#calendar-preview-card').show();
+    }
+
     $('#admin_vitamin_select').change(toggleVitaminSelect);
 
     $('#client_type').change(toggleClientType);
     $('#frequency').change(toggleFrequency);
+    $('#start_date, #end_date, .day-checkbox').change(calculatePreviewDates);
 
     // Jalankan inisialisasi awal
     toggleClientType();
@@ -374,6 +499,7 @@ $(document).ready(function() {
         }
     }
     toggleVitaminSelect();
+    calculatePreviewDates();
 
     // Batasi checkbox hari maksimal 2 pilihan
     $('.day-checkbox').change(function() {
@@ -381,6 +507,7 @@ $(document).ready(function() {
             $(this).prop('checked', false);
             alert('Maksimal memilih 2 hari.');
         }
+        calculatePreviewDates();
     });
 });
 

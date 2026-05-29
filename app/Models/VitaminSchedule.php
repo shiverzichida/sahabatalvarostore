@@ -68,6 +68,18 @@ class VitaminSchedule extends Model
                 if ($counter % 2 === 0) {
                     $should_add = true;
                 }
+            } elseif ($this->frequency === 'once_weekly') {
+                if ($day_name === $start->format('l')) {
+                    $should_add = true;
+                }
+            } elseif ($this->frequency === 'monday_thursday') {
+                if (in_array($day_name, ['Monday', 'Thursday'])) {
+                    $should_add = true;
+                }
+            } elseif ($this->frequency === 'tuesday_friday') {
+                if (in_array($day_name, ['Tuesday', 'Friday'])) {
+                    $should_add = true;
+                }
             } elseif ($this->frequency === 'twice_weekly') {
                 if (in_array($day_name, $days)) {
                     $should_add = true;

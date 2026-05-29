@@ -39,22 +39,27 @@ class VitaminPlannerController extends Controller
     public function storeRequest(Request $request)
     {
         $request->validate([
-            'vitamin_select' => 'required|string',
-            'vitamin_manual' => 'required_if:vitamin_select,__manual__|nullable|string|max:255',
-            'notes' => 'nullable|string',
+            'items' => 'required|array|min:1',
+            'items.*.vitamin_select' => 'required|string',
+            'items.*.vitamin_manual' => 'required_if:items.*.vitamin_select,__manual__|nullable|string|max:255',
+            'items.*.dosage' => 'required|string|max:255',
+            'items.*.notes' => 'nullable|string',
         ]);
 
-        $vitaminName = $request->vitamin_select;
-        if ($vitaminName === '__manual__') {
-            $vitaminName = $request->vitamin_manual;
+        foreach ($request->items as $item) {
+            $vitaminName = $item['vitamin_select'];
+            if ($vitaminName === '__manual__') {
+                $vitaminName = $item['vitamin_manual'];
+            }
+
+            ScheduleRequest::create([
+                'user_id' => Auth::id(),
+                'vitamin_name' => $vitaminName,
+                'dosage' => $item['dosage'],
+                'notes' => $item['notes'] ?? null,
+                'status' => 'pending',
+            ]);
         }
-
-        ScheduleRequest::create([
-            'user_id' => Auth::id(),
-            'vitamin_name' => $vitaminName,
-            'notes' => $request->notes,
-            'status' => 'pending',
-        ]);
 
         return redirect()->route('client.dashboard')->with('success', 'Permintaan suplemen/vitamin berhasil dikirim ke admin.');
     }
