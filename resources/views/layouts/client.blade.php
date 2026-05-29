@@ -364,6 +364,16 @@
             .stats-row {
                 grid-template-columns: 1fr !important;
             }
+            .glass-card {
+                padding: 16px !important;
+            }
+            .chart-card-wrapper {
+                min-height: 320px !important;
+                padding: 16px 10px !important;
+            }
+            .chart-canvas-container {
+                min-height: 220px !important;
+            }
         }
     </style>
     @yield('head_extra')

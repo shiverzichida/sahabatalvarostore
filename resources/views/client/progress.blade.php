@@ -12,12 +12,12 @@
     <div class="progress-grid-layout" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px;">
         
         <!-- Chart.js Trend Line -->
-        <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column; min-height: 400px; justify-content: space-between;">
+        <div class="glass-card chart-card-wrapper" style="padding: 24px; display: flex; flex-direction: column; min-height: 400px; justify-content: space-between;">
             <div>
                 <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Grafik Trend Perkembangan</h3>
                 <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Visualisasi perubahan berat badan dan kadar lemak tubuh (body fat) Anda dari waktu ke waktu.</p>
             </div>
-            <div style="flex-grow: 1; min-height: 280px; position: relative;">
+            <div class="chart-canvas-container" style="flex-grow: 1; min-height: 280px; position: relative;">
                 <canvas id="progressChart" style="width: 100%; height: 100%;"></canvas>
             </div>
         </div>
@@ -95,6 +95,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Setup Chart.js untuk Progres Fisik
+        const isMobile = window.innerWidth < 576;
         const progressData = @json($progressLogs);
         const chartLabels = progressData.map(log => {
             const date = new Date(log.log_date);
@@ -110,15 +111,15 @@
                 labels: chartLabels,
                 datasets: [
                     {
-                        label: 'Berat Badan (kg)',
+                        label: 'Berat (kg)',
                         data: weightData,
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         borderWidth: 3,
                         pointBackgroundColor: '#3b82f6',
                         pointBorderColor: '#fff',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
+                        pointRadius: isMobile ? 3 : 5,
+                        pointHoverRadius: isMobile ? 5 : 7,
                         tension: 0.3,
                         yAxisID: 'y'
                     },
@@ -130,8 +131,8 @@
                         borderWidth: 2,
                         pointBackgroundColor: '#10b981',
                         pointBorderColor: '#fff',
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
+                        pointRadius: isMobile ? 3 : 4,
+                        pointHoverRadius: isMobile ? 4 : 6,
                         tension: 0.3,
                         yAxisID: 'y1',
                         spanGaps: true
@@ -147,7 +148,7 @@
                             color: '#cbd5e1',
                             font: {
                                 family: "'Outfit', sans-serif",
-                                size: 12
+                                size: isMobile ? 10 : 12
                             }
                         }
                     },
@@ -169,7 +170,7 @@
                         },
                         ticks: {
                             color: '#9ca3af',
-                            font: { family: "'Outfit', sans-serif" }
+                            font: { family: "'Outfit', sans-serif", size: isMobile ? 9 : 11 }
                         }
                     },
                     y: {
@@ -179,10 +180,10 @@
                         },
                         ticks: {
                             color: '#3b82f6',
-                            font: { family: "'Outfit', sans-serif" }
+                            font: { family: "'Outfit', sans-serif", size: isMobile ? 9 : 11 }
                         },
                         title: {
-                            display: true,
+                            display: !isMobile,
                             text: 'Berat (kg)',
                             color: '#3b82f6',
                             font: { family: "'Outfit', sans-serif", weight: 'bold' }
@@ -195,10 +196,10 @@
                         },
                         ticks: {
                             color: '#10b981',
-                            font: { family: "'Outfit', sans-serif" }
+                            font: { family: "'Outfit', sans-serif", size: isMobile ? 9 : 11 }
                         },
                         title: {
-                            display: true,
+                            display: !isMobile,
                             text: 'Body Fat (%)',
                             color: '#10b981',
                             font: { family: "'Outfit', sans-serif", weight: 'bold' }

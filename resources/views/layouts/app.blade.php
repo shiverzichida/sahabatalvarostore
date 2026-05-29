@@ -423,6 +423,40 @@
                         </div>
                     </div>
                     <div class="hidden md:flex items-center space-x-3">
+                        <!-- Client Auth Links -->
+                        @auth
+                            <!-- Dropdown Menu Pengguna -->
+                            <div class="relative group inline-flex items-center text-sm font-medium text-gray-600 hover:text-blue-600 cursor-pointer py-2">
+                                <span>Halo, <strong class="text-gray-800">{{ explode(' ', Auth::user()->name)[0] }}</strong></span>
+                                <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                
+                                <div class="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                    <div class="py-1">
+                                        <a href="{{ route('client.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard Saya</a>
+                                        <a href="{{ route('client.calendar') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jadwal Vitamin</a>
+                                        <hr class="border-gray-100 my-1">
+                                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                            @csrf
+                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">
+                                                Keluar (Logout)
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <!-- Tombol Masuk & Daftar -->
+                            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">
+                                Masuk
+                            </a>
+                            <a href="{{ route('register') }}" class="inline-flex items-center px-3.5 py-1.5 border border-blue-600 text-sm font-medium rounded-md text-blue-600 hover:bg-blue-50 transition">
+                                Daftar
+                            </a>
+                        @endauth
+
+                        <!-- Garis Pemisah Tipis -->
+                        <div class="h-5 w-px bg-gray-200 mx-1"></div>
+
                         <!-- Cart Button -->
                         <button class="sa-cart-btn" onclick="window.SACart && SACart.UI.toggleDrawer()" id="sa-cart-btn-desktop" aria-label="Keranjang Belanja">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -458,6 +492,29 @@
                 @endforeach
                 <a href="{{ route('verification.index') }}">Verifikasi Produk</a>
                 <a href="https://wa.me/6285389726874" style="color:#28a745;font-weight:600;">Order via WhatsApp</a>
+                
+                <!-- Pembatas Menu Mobile Auth -->
+                <div class="border-t border-gray-150 my-2 pt-2"></div>
+                
+                @auth
+                    <a href="{{ route('client.dashboard') }}" style="font-weight: 600;">Dashboard Saya</a>
+                    <a href="{{ route('client.calendar') }}">Jadwal Vitamin</a>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2">
+                        @csrf
+                        <button type="submit" class="block w-full text-left py-2 text-red-600 font-semibold">
+                            Keluar (Logout)
+                        </button>
+                    </form>
+                @else
+                    <div class="grid grid-cols-2 gap-2 mt-2 pt-2">
+                        <a href="{{ route('login') }}" class="flex items-center justify-center py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 text-center hover:bg-gray-50">
+                            Masuk
+                        </a>
+                        <a href="{{ route('register') }}" class="flex items-center justify-center py-2 border border-blue-600 bg-blue-600 rounded-md text-sm font-medium text-white text-center hover:bg-blue-700">
+                            Daftar
+                        </a>
+                    </div>
+                @endauth
             </div>
         </nav>
 
