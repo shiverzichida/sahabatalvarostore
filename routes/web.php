@@ -33,7 +33,20 @@ Route::get('/product-images/{path}', function ($path) {
     return response()->file($fullPath);
 })->where('path', '.*');
 
-// Client Vitamin Planner Routes
+// Client Authentication
+Route::get('/register', [App\Http\Controllers\Auth\ClientAuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [App\Http\Controllers\Auth\ClientAuthController::class, 'register'])->name('register.submit');
+Route::get('/login', [App\Http\Controllers\Auth\ClientAuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\ClientAuthController::class, 'login'])->name('login.submit');
+Route::post('/logout', [App\Http\Controllers\Auth\ClientAuthController::class, 'logout'])->name('logout');
+
+// Client Protected Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/client/dashboard', [App\Http\Controllers\VitaminPlannerController::class, 'dashboard'])->name('client.dashboard');
+    Route::post('/client/request', [App\Http\Controllers\VitaminPlannerController::class, 'storeRequest'])->name('client.request.store');
+});
+
+// Client Vitamin Planner Routes (Public Shared Links)
 Route::get('/planner/{code}', [App\Http\Controllers\VitaminPlannerController::class, 'show'])->name('planner.show');
 Route::get('/planner/{code}/export', [App\Http\Controllers\VitaminPlannerController::class, 'exportIcs'])->name('planner.export');
 

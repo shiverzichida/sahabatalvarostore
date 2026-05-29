@@ -10,6 +10,7 @@ class VitaminSchedule extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'client_name',
         'client_code',
         'vitamin_name',
@@ -21,12 +22,31 @@ class VitaminSchedule extends Model
         'notes'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Helper to check if a specific date falls on this schedule.
      */
     public function getEvents()
     {
         $events = [];
+        
+        // Jika frekuensi sekali saja (once)
+        if ($this->frequency === 'once') {
+            $events[] = [
+                'id' => $this->id . '_' . $this->start_date,
+                'title' => $this->vitamin_name . ' (' . $this->dosage . ')',
+                'start' => $this->start_date,
+                'description' => $this->notes ?? '',
+                'className' => 'event-vitamin',
+                'allDay' => true
+            ];
+            return $events;
+        }
+
         $start = new \DateTime($this->start_date);
         $end = new \DateTime($this->end_date);
         $end->modify('+1 day'); // Include the end date

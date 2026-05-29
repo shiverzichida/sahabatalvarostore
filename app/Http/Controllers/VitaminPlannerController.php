@@ -3,12 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\VitaminSchedule;
+use App\Models\ScheduleRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VitaminPlannerController extends Controller
 {
     /**
-     * Show the interactive calendar for a specific client.
+     * Show the logged-in client dashboard with their interactive calendar and request form.
+     */
+    public function dashboard()
+    {
+        $user = Auth::user();
+        $schedules = VitaminSchedule::where('user_id', $user->id)->get();
+
+        // Compile all calendar events
+        $events = [];
+        foreach ($schedules as $schedule) {
+            $events = array_merge($events, $schedule->getEvents());
+        }
+
+        // Fetch client requests
+        $requests = ScheduleRequest::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('client.dashboard', compact('schedules', 'events', 'requests'));
+    }
+
+    /**
+     * Store a new vitamin request from client.
+     */
+    public function storeRequest(Request $request)
+    {
+        $request->validate([
+            'vitamin_name' => 'required|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        ScheduleRequest::create([
+            'user_id' => Auth::id(),
+            'vitamin_name' => $request->vitamin_name,
+            'notes' => $request->notes,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('client.dashboard')->with('success', 'Permintaan suplemen/vitamin berhasil dikirim ke admin.');
+    }
+
+    /**
+     * Show the interactive calendar for a specific client (public sharing link).
      */
     public function show($code)
     {
