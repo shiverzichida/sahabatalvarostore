@@ -401,12 +401,62 @@
             box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
             transform: translateY(-6px);
         }
+
+        /* ─── Evolene Style Hero Carousel ───────────────────────── */
+        .sa-carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #080808;
+        }
+        .sa-carousel-wrapper {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+        }
+        .sa-carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle at 75% 50%, rgba(153, 27, 27, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+        .sa-carousel-indicators {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 30;
+        }
+        .sa-carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        .sa-carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .sa-carousel-dot.active {
+            background: #ef4444;
+            transform: scale(1.4);
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-black text-gray-100 selection:bg-red-600 selection:text-white">
     <div class="min-h-screen flex flex-col bg-[#080808]">
         <!-- Navigation -->
-        <nav class="bg-black/90 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+        <nav class="bg-black border-b border-white/5 sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-20">
                     <div class="flex items-center">

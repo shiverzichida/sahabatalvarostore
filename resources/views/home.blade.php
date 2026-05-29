@@ -1,56 +1,134 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Hero Section -->
-<div class="relative bg-black overflow-hidden border-b border-white/5">
-    <div class="max-w-7xl mx-auto">
-        <div class="relative z-20 pb-8 bg-transparent sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div class="sm:text-center lg:text-left">
-                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7xl font-sporty">
-                        <span class="block">Authorized Main</span>
-                        <span class="block text-red-500">Distributor</span>
-                        <span class="block text-white text-3xl sm:text-4xl md:text-5xl mt-2 tracking-normal font-sans font-light lowercase italic">in Indonesia</span>
+<!-- Hero Carousel Section -->
+<div class="sa-carousel-container relative border-b border-white/5">
+    <!-- Vertical Dot Indicators -->
+    <div class="sa-carousel-indicators">
+        <button class="sa-carousel-dot active" data-slide="0" aria-label="Slide 1"></button>
+        <button class="sa-carousel-dot" data-slide="1" aria-label="Slide 2"></button>
+        <button class="sa-carousel-dot" data-slide="2" aria-label="Slide 3"></button>
+        <button class="sa-carousel-dot" data-slide="3" aria-label="Slide 4"></button>
+    </div>
+
+    <!-- Slides Wrapper -->
+    <div class="sa-carousel-wrapper" id="saCarouselWrapper">
+        <!-- Slide 1 -->
+        <div class="sa-carousel-slide py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
+                <div class="text-left">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Authorized Number 1 Distributor</span>
+                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+                        Every Serving<br><span class="text-red-500">Proves It.</span>
                     </h1>
-                    <p class="mt-5 text-base text-gray-400 sm:mt-6 sm:text-lg sm:max-w-xl sm:mx-auto md:text-xl lg:mx-0 font-light">
+                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
                         Kami adalah distributor resmi nomor 1 di Indonesia untuk berbagai produk farmasi berkualitas tinggi. Pastikan keaslian produk Anda melalui sistem verifikasi kami.
                     </p>
                     
-                    <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                        <div class="rounded-md shadow">
-                            <a href="{{ route('product.index') }}" class="w-full flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:text-lg md:px-10">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div>
+                            <a href="{{ route('product.index') }}" class="w-full inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
                                 Lihat Produk
                             </a>
                         </div>
                         
                         @auth
-                            <div class="rounded-md shadow-sm">
-                                <a href="{{ route('client.dashboard') }}" class="w-full flex items-center justify-center px-8 py-3.5 border border-white/10 text-base font-semibold rounded-md text-white bg-white/5 hover:bg-white/10 md:py-4 md:text-lg md:px-10 transition">
+                            <div>
+                                <a href="{{ route('client.dashboard') }}" class="w-full inline-flex items-center justify-center px-8 py-3.5 border border-white/10 text-base font-semibold rounded-md text-white bg-white/5 hover:bg-white/10 transition md:py-4 md:px-10">
                                     Dashboard Saya &rarr;
                                 </a>
                             </div>
                         @else
                             <div class="flex flex-row gap-3 w-full sm:w-auto">
-                                <a href="{{ route('login') }}" class="flex-1 sm:flex-none flex items-center justify-center px-6 py-3.5 border border-white/10 text-base font-semibold rounded-md text-gray-300 bg-white/5 hover:bg-white/10 md:py-4 md:text-lg md:px-8 transition">
+                                <a href="{{ route('login') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3.5 border border-white/10 text-base font-semibold rounded-md text-gray-300 bg-white/5 hover:bg-white/10 transition md:py-4 md:px-8">
                                     Masuk
                                 </a>
-                                <a href="{{ route('register') }}" class="flex-1 sm:flex-none flex items-center justify-center px-6 py-3.5 border border-red-600 text-base font-semibold rounded-md text-red-500 bg-red-950/20 hover:bg-red-950/40 md:py-4 md:text-lg md:px-8 transition">
+                                <a href="{{ route('register') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3.5 border border-red-600 text-base font-semibold rounded-md text-red-500 bg-red-950/20 hover:bg-red-950/40 transition md:py-4 md:px-8">
                                     Daftar
                                 </a>
                             </div>
                         @endauth
                     </div>
                 </div>
-            </main>
+                <div class="flex justify-center relative">
+                    <!-- Glow effect under the product -->
+                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/a.jpeg') }}" alt="Product Photo A">
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <!-- Hero Image with Fade Overlays -->
-    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 relative h-64 sm:h-80 md:h-96 lg:h-full">
-        <!-- Gradients to blend image into the dark page background -->
-        <div class="absolute inset-0 bg-gradient-to-r from-[#080808] via-transparent to-transparent z-10 hidden lg:block"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/20 to-transparent z-10 lg:hidden"></div>
-        <img class="h-full w-full object-cover opacity-60 filter grayscale contrast-125 brightness-75" src="{{ asset('images/background.jpeg') }}" alt="Authorized Main Distributor">
+
+        <!-- Slide 2 -->
+        <div class="sa-carousel-slide py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
+                <div class="text-left">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Uncompromising Standards</span>
+                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+                        Science Backed<br><span class="text-red-500">Formulas.</span>
+                    </h1>
+                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                        Setiap produk yang kami distribusikan melewati uji laboratorium ketat untuk menjamin kemurnian dan efisiensi penyerapan maksimal bagi hasil terbaik Anda.
+                    </p>
+                    <div>
+                        <a href="{{ route('verification.index') }}" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                            Cek Keaslian Produk
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center relative">
+                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/b.jpeg') }}" alt="Product Photo B">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="sa-carousel-slide py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
+                <div class="text-left">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Maximum Muscle & Power</span>
+                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+                        Reach Your<br><span class="text-red-500">True Potential.</span>
+                    </h1>
+                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                        Tingkatkan performa latihan dan capai target fisik ideal Anda dengan dukungan konsultasi program dari tim ahli kami.
+                    </p>
+                    <div>
+                        <a href="https://wa.me/6285389726874" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                            Konsultasi via WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center relative">
+                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/c.jpg') }}" alt="Product Photo C">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="sa-carousel-slide py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
+                <div class="text-left">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Fast, Safe & Secure Delivery</span>
+                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+                        Secure &<br><span class="text-red-500">Safe Shipping.</span>
+                    </h1>
+                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                        Kami mengemas pesanan Anda dengan proteksi ekstra untuk menjamin keamanan hingga sampai ke depan pintu rumah Anda.
+                    </p>
+                    <div>
+                        <a href="{{ route('product.index') }}" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                            Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center relative">
+                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/d.jpeg') }}" alt="Product Photo D">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -164,3 +242,80 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const wrapper = document.getElementById('saCarouselWrapper');
+        const dots = document.querySelectorAll('.sa-carousel-dot');
+        const slideCount = dots.length;
+        let currentSlide = 0;
+        let autoplayInterval;
+
+        function showSlide(index) {
+            currentSlide = (index + slideCount) % slideCount;
+            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, idx) => {
+                if (idx === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 6000); // 6 seconds per slide
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+            }
+        }
+
+        // Dot click handlers
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.getAttribute('data-slide'));
+                showSlide(slideIndex);
+                startAutoplay(); // Reset autoplay timer on manual click
+            });
+        });
+
+        // Touch swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+        const threshold = 50;
+
+        wrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            stopAutoplay();
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > threshold) {
+                if (diffX > 0) {
+                    // Swipe left -> next slide
+                    showSlide(currentSlide + 1);
+                } else {
+                    // Swipe right -> prev slide
+                    showSlide(currentSlide - 1);
+                }
+            }
+            startAutoplay();
+        }, { passive: true });
+
+        // Start autoplay initially
+        startAutoplay();
+    });
+</script>
+@endpush
