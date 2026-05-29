@@ -228,6 +228,14 @@
             </div>
 
             <div class="form-group">
+                <label class="form-label" for="whatsapp">Nomor WhatsApp</label>
+                <input class="input-control" type="tel" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}" placeholder="Contoh: 081234567890" required>
+                @error('whatsapp')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label class="form-label" for="password">Password</label>
                 <input class="input-control" type="password" id="password" name="password" placeholder="Minimal 6 karakter" required>
                 @error('password')

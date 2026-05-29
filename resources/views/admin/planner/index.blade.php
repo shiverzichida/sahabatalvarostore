@@ -37,7 +37,7 @@
                     <thead>
                         <tr>
                             <th>Nama Client</th>
-                            <th>Email</th>
+                            <th>Email / WA</th>
                             <th>Vitamin Yang Diminta</th>
                             <th>Catatan Tambahan</th>
                             <th>Waktu Kirim</th>
@@ -48,7 +48,15 @@
                         @foreach($pendingRequests as $req)
                             <tr>
                                 <td class="align-middle"><strong>{{ $req->user->name }}</strong></td>
-                                <td class="align-middle">{{ $req->user->email }}</td>
+                                <td class="align-middle">
+                                    {{ $req->user->email }}
+                                    @if($req->user->whatsapp)
+                                        <br>
+                                        <a href="https://wa.me/{{ preg_replace('/\D/', '', $req->user->whatsapp) }}" target="_blank" class="badge badge-success">
+                                            <i class="fab fa-whatsapp"></i> {{ $req->user->whatsapp }}
+                                        </a>
+                                    @endif
+                                </td>
                                 <td class="align-middle"><span class="badge badge-warning">{{ $req->vitamin_name }}</span></td>
                                 <td class="align-middle">{{ $req->notes ?? '-' }}</td>
                                 <td class="align-middle"><small>{{ $req->created_at->diffForHumans() }}</small></td>
@@ -115,7 +123,7 @@
                             <option value="">-- Pilih Akun Client --</option>
                             @foreach($clients as $c)
                                 <option value="{{ $c->id }}" {{ ($prefill['user_id'] == $c->id || old('user_id') == $c->id) ? 'selected' : '' }}>
-                                    {{ $c->name }} ({{ $c->email }})
+                                    {{ $c->name }} ({{ $c->email }} - WA: {{ $c->whatsapp ?? '-' }})
                                 </option>
                             @endforeach
                         </select>
@@ -217,6 +225,12 @@
                                     <strong>{{ $sched->client_name }}</strong>
                                     @if($sched->user_id)
                                         <br><small class="text-success"><i class="fas fa-user-check"></i> Akun Terdaftar</small>
+                                        @if($sched->user && $sched->user->whatsapp)
+                                            <br>
+                                            <a href="https://wa.me/{{ preg_replace('/\D/', '', $sched->user->whatsapp) }}" target="_blank" class="text-success" style="font-size: 12px; font-weight: 500;">
+                                                <i class="fab fa-whatsapp"></i> Chat ({{ $sched->user->whatsapp }})
+                                            </a>
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="align-middle">
