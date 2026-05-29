@@ -44,6 +44,8 @@ Route::post('/logout', [App\Http\Controllers\Auth\ClientAuthController::class, '
 Route::middleware('auth')->group(function () {
     Route::get('/client/dashboard', [App\Http\Controllers\VitaminPlannerController::class, 'dashboard'])->name('client.dashboard');
     Route::post('/client/request', [App\Http\Controllers\VitaminPlannerController::class, 'storeRequest'])->name('client.request.store');
+    Route::post('/client/profile', [App\Http\Controllers\VitaminPlannerController::class, 'storeProfile'])->name('client.profile.store');
+    Route::post('/client/progress', [App\Http\Controllers\VitaminPlannerController::class, 'storeProgress'])->name('client.progress.store');
 });
 
 // Client Vitamin Planner Routes (Public Shared Links)

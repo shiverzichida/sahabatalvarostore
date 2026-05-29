@@ -46,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(ClientProfile::class);
+    }
+
+    public function progressLogs()
+    {
+        return $this->hasMany(ClientProgressLog::class)->orderBy('log_date', 'asc');
+    }
 }

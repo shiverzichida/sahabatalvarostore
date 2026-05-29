@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\VitaminSchedule;
 use App\Models\ScheduleRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\Product;
+use App\Models\ClientProfile;
+use App\Models\ClientProgressLog;
 
 class VitaminPlannerController extends Controller
 {
@@ -17,6 +18,15 @@ class VitaminPlannerController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
+        
+        // Cek jika profile belum di-setup
+        if (!$user->profile) {
+            return view('client.profile_setup');
+        }
+
+        $profile = $user->profile;
+        $progressLogs = $user->progressLogs;
+
         $schedules = VitaminSchedule::where('user_id', $user->id)->get();
 
         // Compile all calendar events
@@ -33,7 +43,7 @@ class VitaminPlannerController extends Controller
         // Fetch active products for select dropdown
         $products = Product::where('is_active', true)->orderBy('name', 'asc')->get();
 
-        return view('client.dashboard', compact('schedules', 'events', 'requests', 'products'));
+        return view('client.dashboard', compact('schedules', 'events', 'requests', 'products', 'profile', 'progressLogs'));
     }
 
     public function storeRequest(Request $request)
@@ -130,5 +140,76 @@ class VitaminPlannerController extends Controller
         $output .= "END:VCALENDAR\r\n";
         echo $output;
         exit;
+    }
+
+    /**
+     * Store the client's initial physical profile.
+     */
+    public function storeProfile(Request $request)
+    {
+        $request->validate([
+            'birth_date' => 'required|date',
+            'gender' => 'required|string|in:Laki-laki,Perempuan',
+            'initial_height' => 'required|numeric|min:30|max:300',
+            'initial_weight' => 'required|numeric|min:10|max:500',
+            'initial_body_fat' => 'nullable|numeric|min:1|max:100',
+            'goal' => 'nullable|string|max:255',
+        ]);
+
+        $user = Auth::user();
+
+        // Buat profile
+        ClientProfile::create([
+            'user_id' => $user->id,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'initial_height' => $request->initial_height,
+            'initial_weight' => $request->initial_weight,
+            'initial_body_fat' => $request->initial_body_fat,
+            'goal' => $request->goal,
+        ]);
+
+        // Catat sebagai log pertama
+        ClientProgressLog::create([
+            'user_id' => $user->id,
+            'log_date' => now()->format('Y-m-d'),
+            'weight' => $request->initial_weight,
+            'height' => $request->initial_height,
+            'body_fat' => $request->initial_body_fat,
+            'notes' => 'Setup Baseline Profil Awal',
+        ]);
+
+        return redirect()->route('client.dashboard')->with('success', 'Profil awal berhasil disimpan! Selamat datang di dashboard progres Anda.');
+    }
+
+    /**
+     * Store or update weekly progress logs.
+     */
+    public function storeProgress(Request $request)
+    {
+        $request->validate([
+            'log_date' => 'required|date',
+            'weight' => 'required|numeric|min:10|max:500',
+            'height' => 'required|numeric|min:30|max:300',
+            'body_fat' => 'nullable|numeric|min:1|max:100',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        $user = Auth::user();
+
+        ClientProgressLog::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'log_date' => $request->log_date,
+            ],
+            [
+                'weight' => $request->weight,
+                'height' => $request->height,
+                'body_fat' => $request->body_fat,
+                'notes' => $request->notes,
+            ]
+        );
+
+        return redirect()->route('client.dashboard')->with('success', 'Data progres mingguan berhasil dicatat.');
     }
 }
