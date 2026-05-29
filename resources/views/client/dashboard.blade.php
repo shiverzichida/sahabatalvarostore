@@ -351,13 +351,7 @@
                                 <label class="form-label">Nama Vitamin / Suplemen</label>
                                 <input type="text" name="items[0][vitamin_select]" class="input-control search-vitamin-input" placeholder="Ketik untuk mencari/mengisi..." autocomplete="off" required>
                                 <div class="suggestions-dropdown d-none" style="position: absolute; left: 0; right: 0; top: 100%; background: #1f2937; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; z-index: 999; max-height: 180px; overflow-y: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin-top: 4px;"></div>
-                                <!-- Field manual hidden default, tapi kita submit vitamin_select langsung sebagai nilainya -->
                                 <input type="hidden" name="items[0][vitamin_manual]" value="">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label class="form-label">Dosis</label>
-                                <input type="text" name="items[0][dosage]" class="input-control" placeholder="Contoh: 500mg, 1 tablet, 1ml" required>
                             </div>
 
                             <div class="form-group mb-0">
@@ -469,9 +463,12 @@
                         item.addEventListener('mouseenter', () => item.style.backgroundColor = 'rgba(255,255,255,0.05)');
                         item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
                         
-                        item.addEventListener('click', function() {
+                        item.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
                             input.value = match;
                             dropdown.classList.add('d-none');
+                            dropdown.innerHTML = '';
                         });
                         dropdown.appendChild(item);
                     });
@@ -514,11 +511,6 @@
                     <input type="text" name="items[${rowIndex}][vitamin_select]" class="input-control search-vitamin-input" placeholder="Ketik untuk mencari/mengisi..." autocomplete="off" required>
                     <div class="suggestions-dropdown d-none" style="position: absolute; left: 0; right: 0; top: 100%; background: #1f2937; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; z-index: 999; max-height: 180px; overflow-y: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.5); margin-top: 4px;"></div>
                     <input type="hidden" name="items[${rowIndex}][vitamin_manual]" value="">
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label">Dosis</label>
-                    <input type="text" name="items[${rowIndex}][dosage]" class="input-control" placeholder="Contoh: 500mg, 1 tablet, 1ml" required>
                 </div>
 
                 <div class="form-group mb-0">

@@ -42,7 +42,7 @@ class VitaminPlannerController extends Controller
             'items' => 'required|array|min:1',
             'items.*.vitamin_select' => 'required|string',
             'items.*.vitamin_manual' => 'required_if:items.*.vitamin_select,__manual__|nullable|string|max:255',
-            'items.*.dosage' => 'required|string|max:255',
+            'items.*.dosage' => 'nullable|string|max:255',
             'items.*.notes' => 'nullable|string',
         ]);
 
@@ -55,7 +55,7 @@ class VitaminPlannerController extends Controller
             ScheduleRequest::create([
                 'user_id' => Auth::id(),
                 'vitamin_name' => $vitaminName,
-                'dosage' => $item['dosage'],
+                'dosage' => $item['dosage'] ?? null,
                 'notes' => $item['notes'] ?? null,
                 'status' => 'pending',
             ]);
