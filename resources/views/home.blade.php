@@ -14,12 +14,29 @@
                     <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                         Kami adalah distributor resmi nomor 1 di Indonesia untuk berbagai produk farmasi berkualitas tinggi. Pastikan keaslian produk Anda melalui sistem verifikasi kami.
                     </p>
-                    <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                    <div class="mt-5 sm:mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                         <div class="rounded-md shadow">
-                            <a href="{{ route('product.index') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-blue hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
+                            <a href="{{ route('product.index') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-md text-white bg-primary-blue hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition">
                                 Lihat Produk
                             </a>
                         </div>
+                        
+                        @auth
+                            <div class="rounded-md shadow-sm">
+                                <a href="{{ route('client.dashboard') }}" class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-semibold rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition">
+                                    Dashboard Saya &rarr;
+                                </a>
+                            </div>
+                        @else
+                            <div class="flex flex-row gap-3 w-full sm:w-auto">
+                                <a href="{{ route('login') }}" class="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-semibold rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-8 transition">
+                                    Masuk
+                                </a>
+                                <a href="{{ route('register') }}" class="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-semibold rounded-md text-blue-600 bg-blue-50 hover:bg-blue-100 md:py-4 md:text-lg md:px-8 transition">
+                                    Daftar
+                                </a>
+                            </div>
+                        @endauth
                     </div>
                 </div>
             </main>
