@@ -470,7 +470,7 @@
                             <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white cursor-pointer transition">
                                 <span>Tentang Kami</span>
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                                <div class="absolute left-0 top-full mt-0 w-48 rounded-md shadow-lg bg-[#0e0e0e] border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute left-0 top-full mt-0 w-48 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                                     <div class="py-1">
                                         <a href="{{ route('about.summary') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Ringkasan Perusahaan</a>
                                         <a href="{{ route('about.vision_mission') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Visi & Misi</a>
@@ -484,7 +484,7 @@
                                     <span>Produk</span>
                                     <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </a>
-                                <div class="absolute left-0 top-full mt-0 w-56 rounded-md shadow-lg bg-[#0e0e0e] border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute left-0 top-full mt-0 w-56 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                                     <div class="py-1">
                                         <a href="{{ route('product.index') }}" class="block px-4 py-2 text-sm font-semibold text-white border-b border-white/5 hover:bg-white/5">Semua Produk</a>
                                         @foreach(\App\Models\Category::all() as $category)
@@ -507,7 +507,7 @@
                                 <span>Halo, <strong class="text-white">{{ explode(' ', Auth::user()->name)[0] }}</strong></span>
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 
-                                <div class="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-[#0e0e0e] border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                                     <div class="py-1">
                                         <a href="{{ route('client.dashboard') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Dashboard Saya</a>
                                         <a href="{{ route('client.calendar') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Jadwal Vitamin</a>
