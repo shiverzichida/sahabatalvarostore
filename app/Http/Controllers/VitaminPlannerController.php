@@ -7,6 +7,8 @@ use App\Models\ScheduleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Product;
+
 class VitaminPlannerController extends Controller
 {
     /**
@@ -28,22 +30,28 @@ class VitaminPlannerController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('client.dashboard', compact('schedules', 'events', 'requests'));
+        // Fetch active products for select dropdown
+        $products = Product::where('is_active', true)->orderBy('name', 'asc')->get();
+
+        return view('client.dashboard', compact('schedules', 'events', 'requests', 'products'));
     }
 
-    /**
-     * Store a new vitamin request from client.
-     */
     public function storeRequest(Request $request)
     {
         $request->validate([
-            'vitamin_name' => 'required|string|max:255',
+            'vitamin_select' => 'required|string',
+            'vitamin_manual' => 'required_if:vitamin_select,__manual__|nullable|string|max:255',
             'notes' => 'nullable|string',
         ]);
 
+        $vitaminName = $request->vitamin_select;
+        if ($vitaminName === '__manual__') {
+            $vitaminName = $request->vitamin_manual;
+        }
+
         ScheduleRequest::create([
             'user_id' => Auth::id(),
-            'vitamin_name' => $request->vitamin_name,
+            'vitamin_name' => $vitaminName,
             'notes' => $request->notes,
             'status' => 'pending',
         ]);

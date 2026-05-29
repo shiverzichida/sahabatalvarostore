@@ -141,7 +141,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="vitamin_name">Nama Vitamin / Suplemen</label>
+                        <label for="admin_vitamin_select">Pilih Vitamin / Produk Catalog</label>
+                        <select id="admin_vitamin_select" class="form-control select2">
+                            <option value="">-- Pilih Produk --</option>
+                            @foreach($products as $prod)
+                                <option value="{{ $prod->name }}" {{ (isset($prefill['vitamin_name']) && $prefill['vitamin_name'] == $prod->name) ? 'selected' : '' }}>
+                                    {{ $prod->name }}
+                                </option>
+                            @endforeach
+                            <option value="__manual__">Lainnya (Tulis manual...)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="admin-manual-vitamin-group">
+                        <label for="vitamin_name">Nama Vitamin / Suplemen (Detail/Manual)</label>
                         <input type="text" name="vitamin_name" id="vitamin_name" class="form-control" placeholder="Contoh: Vitamin C" value="{{ $prefill['vitamin_name'] ?? old('vitamin_name') }}" required>
                     </div>
 
@@ -316,12 +329,51 @@ $(document).ready(function() {
         }
     }
 
+    // Toggle input Vitamin/Catalog
+    function toggleVitaminSelect() {
+        const val = $('#admin_vitamin_select').val();
+        if (val === '__manual__') {
+            $('#admin-manual-vitamin-group').removeClass('d-none');
+            $('#vitamin_name').prop('readonly', false);
+            // Don't clear if it was prefilled by code
+        } else if (val === '') {
+            $('#admin-manual-vitamin-group').removeClass('d-none');
+            $('#vitamin_name').val('');
+            $('#vitamin_name').prop('readonly', false);
+        } else {
+            $('#admin-manual-vitamin-group').addClass('d-none');
+            $('#vitamin_name').val(val);
+            $('#vitamin_name').prop('readonly', true);
+        }
+    }
+
+    $('#admin_vitamin_select').change(toggleVitaminSelect);
+
     $('#client_type').change(toggleClientType);
     $('#frequency').change(toggleFrequency);
 
     // Jalankan inisialisasi awal
     toggleClientType();
     toggleFrequency();
+
+    // Cek prefill vitamin untuk kesesuaian dengan opsi select
+    const prefillVit = "{{ $prefill['vitamin_name'] ?? '' }}";
+    if (prefillVit) {
+        let exists = false;
+        $('#admin_vitamin_select option').each(function() {
+            if ($(this).val() === prefillVit) {
+                exists = true;
+            }
+        });
+
+        if (exists) {
+            $('#admin_vitamin_select').val(prefillVit);
+        } else {
+            $('#admin_vitamin_select').val('__manual__');
+            $('#vitamin_name').val(prefillVit);
+        }
+    }
+    toggleVitaminSelect();
 
     // Batasi checkbox hari maksimal 2 pilihan
     $('.day-checkbox').change(function() {

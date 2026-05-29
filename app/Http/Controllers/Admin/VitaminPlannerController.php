@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Models\Product;
+
 class VitaminPlannerController extends Controller
 {
     public function index(Request $request)
@@ -18,6 +20,7 @@ class VitaminPlannerController extends Controller
         $pendingRequests = ScheduleRequest::where('status', 'pending')
             ->orderBy('created_at', 'desc')
             ->get();
+        $products = Product::where('is_active', true)->orderBy('name', 'asc')->get();
 
         // Prefill logic dari request client
         $prefill = [
@@ -28,7 +31,7 @@ class VitaminPlannerController extends Controller
             'notes' => $request->query('notes'),
         ];
 
-        return view('admin.planner.index', compact('schedules', 'clients', 'pendingRequests', 'prefill'));
+        return view('admin.planner.index', compact('schedules', 'clients', 'pendingRequests', 'prefill', 'products'));
     }
 
     public function store(Request $request)

@@ -343,8 +343,19 @@
                 <form action="{{ route('client.request.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label class="form-label" for="vitamin_name">Nama Vitamin / Suplemen</label>
-                        <input class="input-control" type="text" id="vitamin_name" name="vitamin_name" placeholder="Contoh: Vitamin C 500mg, Multivitamin" required>
+                        <label class="form-label" for="vitamin_select">Pilih Vitamin / Suplemen</label>
+                        <select class="input-control" id="vitamin_select" name="vitamin_select" required>
+                            <option value="">-- Pilih Suplemen --</option>
+                            @foreach($products as $prod)
+                                <option value="{{ $prod->name }}">{{ $prod->name }}</option>
+                            @endforeach
+                            <option value="__manual__">Lainnya (Tulis manual...)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group d-none" id="manual-vitamin-group">
+                        <label class="form-label" for="vitamin_manual">Nama Vitamin / Suplemen (Manual)</label>
+                        <input class="input-control" type="text" id="vitamin_manual" name="vitamin_manual" placeholder="Contoh: Vitamin C 500mg, Multivitamin">
                     </div>
 
                     <div class="form-group">
@@ -410,6 +421,23 @@
             }
         });
         calendar.render();
+
+        // Toggle form-group manual input vitamin
+        var selectEl = document.getElementById('vitamin_select');
+        if (selectEl) {
+            selectEl.addEventListener('change', function() {
+                var manualGroup = document.getElementById('manual-vitamin-group');
+                var manualInput = document.getElementById('vitamin_manual');
+                if (this.value === '__manual__') {
+                    manualGroup.classList.remove('d-none');
+                    manualInput.setAttribute('required', 'required');
+                } else {
+                    manualGroup.classList.add('d-none');
+                    manualInput.removeAttribute('required');
+                    manualInput.value = '';
+                }
+            });
+        }
     });
 </script>
 
