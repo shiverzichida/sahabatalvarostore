@@ -18,32 +18,59 @@ class VitaminPlannerController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        
-        // Cek jika profile belum di-setup
         if (!$user->profile) {
             return view('client.profile_setup');
+        }
+        return redirect()->route('client.calendar');
+    }
+
+    public function calendarPage()
+    {
+        $user = Auth::user();
+        if (!$user->profile) {
+            return redirect()->route('client.dashboard');
         }
 
         $profile = $user->profile;
         $progressLogs = $user->progressLogs;
-
         $schedules = VitaminSchedule::where('user_id', $user->id)->get();
 
-        // Compile all calendar events
         $events = [];
         foreach ($schedules as $schedule) {
             $events = array_merge($events, $schedule->getEvents());
         }
 
-        // Fetch client requests
+        return view('client.calendar', compact('profile', 'progressLogs', 'schedules', 'events'));
+    }
+
+    public function progressPage()
+    {
+        $user = Auth::user();
+        if (!$user->profile) {
+            return redirect()->route('client.dashboard');
+        }
+
+        $profile = $user->profile;
+        $progressLogs = $user->progressLogs;
+
+        return view('client.progress', compact('profile', 'progressLogs'));
+    }
+
+    public function requestPage()
+    {
+        $user = Auth::user();
+        if (!$user->profile) {
+            return redirect()->route('client.dashboard');
+        }
+
+        $profile = $user->profile;
+        $progressLogs = $user->progressLogs;
         $requests = ScheduleRequest::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->get();
-
-        // Fetch active products for select dropdown
         $products = Product::where('is_active', true)->orderBy('name', 'asc')->get();
 
-        return view('client.dashboard', compact('schedules', 'events', 'requests', 'products', 'profile', 'progressLogs'));
+        return view('client.request', compact('profile', 'progressLogs', 'requests', 'products'));
     }
 
     public function storeRequest(Request $request)
@@ -71,7 +98,7 @@ class VitaminPlannerController extends Controller
             ]);
         }
 
-        return redirect()->route('client.dashboard')->with('success', 'Permintaan suplemen/vitamin berhasil dikirim ke admin.');
+        return redirect()->route('client.request')->with('success', 'Permintaan suplemen/vitamin berhasil dikirim ke admin.');
     }
 
     /**
@@ -179,7 +206,7 @@ class VitaminPlannerController extends Controller
             'notes' => 'Setup Baseline Profil Awal',
         ]);
 
-        return redirect()->route('client.dashboard')->with('success', 'Profil awal berhasil disimpan! Selamat datang di dashboard progres Anda.');
+        return redirect()->route('client.calendar')->with('success', 'Profil awal berhasil disimpan! Selamat datang di dashboard progres Anda.');
     }
 
     /**
@@ -210,6 +237,6 @@ class VitaminPlannerController extends Controller
             ]
         );
 
-        return redirect()->route('client.dashboard')->with('success', 'Data progres mingguan berhasil dicatat.');
+        return redirect()->route('client.progress')->with('success', 'Data progres mingguan berhasil dicatat.');
     }
 }

@@ -43,6 +43,9 @@ Route::post('/logout', [App\Http\Controllers\Auth\ClientAuthController::class, '
 // Client Protected Routes
 Route::middleware('auth')->group(function () {
     Route::get('/client/dashboard', [App\Http\Controllers\VitaminPlannerController::class, 'dashboard'])->name('client.dashboard');
+    Route::get('/client/calendar', [App\Http\Controllers\VitaminPlannerController::class, 'calendarPage'])->name('client.calendar');
+    Route::get('/client/progress', [App\Http\Controllers\VitaminPlannerController::class, 'progressPage'])->name('client.progress');
+    Route::get('/client/request', [App\Http\Controllers\VitaminPlannerController::class, 'requestPage'])->name('client.request');
     Route::post('/client/request', [App\Http\Controllers\VitaminPlannerController::class, 'storeRequest'])->name('client.request.store');
     Route::post('/client/profile', [App\Http\Controllers\VitaminPlannerController::class, 'storeProfile'])->name('client.profile.store');
     Route::post('/client/progress', [App\Http\Controllers\VitaminPlannerController::class, 'storeProgress'])->name('client.progress.store');
