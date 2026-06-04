@@ -14,118 +14,118 @@
     <!-- Slides Wrapper -->
     <div class="sa-carousel-wrapper" id="saCarouselWrapper">
         <!-- Slide 1 -->
-        <div class="sa-carousel-slide py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
-                <div class="text-left">
-                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Authorized Number 1 Distributor</span>
-                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+        <div class="sa-carousel-slide min-h-[580px] sm:min-h-[620px] lg:min-h-0 lg:h-auto py-8 pb-20 sm:py-12 sm:pb-24 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center h-full lg:pl-24">
+                <div class="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-xs sm:text-sm block mb-1.5 lg:mb-2">Authorized Number 1 Distributor</span>
+                    <h1 class="text-3.5xl sm:text-5xl lg:text-7.5xl tracking-tight font-black uppercase text-white font-sporty leading-none mb-3 lg:mb-4">
                         Every Serving<br><span class="text-red-500">Proves It.</span>
                     </h1>
-                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                    <p class="text-xs sm:text-base text-gray-400 max-w-xl mb-6 lg:mb-8 font-light mx-auto lg:mx-0">
                         Kami adalah distributor resmi nomor 1 di Indonesia untuk berbagai produk farmasi berkualitas tinggi. Pastikan keaslian produk Anda melalui sistem verifikasi kami.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <div>
-                            <a href="{{ route('product.index') }}" class="w-full inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                        <div class="w-full sm:w-auto">
+                            <a href="{{ route('product.index') }}" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm sm:text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition lg:py-4 lg:px-10">
                                 Lihat Produk
                             </a>
                         </div>
                         
                         @auth
-                            <div>
-                                <a href="{{ route('client.dashboard') }}" class="w-full inline-flex items-center justify-center px-8 py-3.5 border border-white/10 text-base font-semibold rounded-md text-white bg-white/5 hover:bg-white/10 transition md:py-4 md:px-10">
+                            <div class="w-full sm:w-auto">
+                                <a href="{{ route('client.dashboard') }}" class="w-full inline-flex items-center justify-center px-6 py-3 border border-white/10 text-sm sm:text-base font-semibold rounded-md text-white bg-white/5 hover:bg-white/10 transition lg:py-4 lg:px-10">
                                     Dashboard Saya &rarr;
                                 </a>
                             </div>
                         @else
-                            <div class="flex flex-row gap-3 w-full sm:w-auto">
-                                <a href="{{ route('login') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3.5 border border-white/10 text-base font-semibold rounded-md text-gray-300 bg-white/5 hover:bg-white/10 transition md:py-4 md:px-8">
+                            <div class="flex flex-row gap-3 w-full sm:w-auto justify-center lg:justify-start">
+                                <a href="{{ route('login') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-5 py-3 border border-white/10 text-sm sm:text-base font-semibold rounded-md text-gray-300 bg-white/5 hover:bg-white/10 transition lg:py-4 lg:px-8">
                                     Masuk
                                 </a>
-                                <a href="{{ route('register') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3.5 border border-red-600 text-base font-semibold rounded-md text-red-500 bg-red-950/20 hover:bg-red-950/40 transition md:py-4 md:px-8">
+                                <a href="{{ route('register') }}" class="flex-1 sm:flex-none inline-flex items-center justify-center px-5 py-3 border border-red-600 text-sm sm:text-base font-semibold rounded-md text-red-500 bg-red-950/20 hover:bg-red-950/40 transition lg:py-4 lg:px-8">
                                     Daftar
                                 </a>
                             </div>
                         @endauth
                     </div>
                 </div>
-                <div class="flex justify-center relative">
+                <div class="flex justify-center relative order-1 lg:order-2 h-56 sm:h-72 lg:h-auto w-full">
                     <!-- Glow effect under the product -->
-                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
-                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/a.jpeg') }}" alt="Product Photo A">
+                    <div class="absolute w-56 h-56 sm:w-72 sm:h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-full lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/a.jpeg') }}" alt="Product Photo A">
                 </div>
             </div>
         </div>
 
         <!-- Slide 2 -->
-        <div class="sa-carousel-slide py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
-                <div class="text-left">
-                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Uncompromising Standards</span>
-                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+        <div class="sa-carousel-slide min-h-[580px] sm:min-h-[620px] lg:min-h-0 lg:h-auto py-8 pb-20 sm:py-12 sm:pb-24 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center h-full lg:pl-24">
+                <div class="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-xs sm:text-sm block mb-1.5 lg:mb-2">Uncompromising Standards</span>
+                    <h1 class="text-3.5xl sm:text-5xl lg:text-7.5xl tracking-tight font-black uppercase text-white font-sporty leading-none mb-3 lg:mb-4">
                         Science Backed<br><span class="text-red-500">Formulas.</span>
                     </h1>
-                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                    <p class="text-xs sm:text-base text-gray-400 max-w-xl mb-6 lg:mb-8 font-light mx-auto lg:mx-0">
                         Setiap produk yang kami distribusikan melewati uji laboratorium ketat untuk menjamin kemurnian dan efisiensi penyerapan maksimal bagi hasil terbaik Anda.
                     </p>
-                    <div>
-                        <a href="{{ route('verification.index') }}" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                    <div class="flex justify-center lg:justify-start">
+                        <a href="{{ route('verification.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm sm:text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition lg:py-4 lg:px-10">
                             Cek Keaslian Produk
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-center relative">
-                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
-                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/b.jpeg') }}" alt="Product Photo B">
+                <div class="flex justify-center relative order-1 lg:order-2 h-56 sm:h-72 lg:h-auto w-full">
+                    <div class="absolute w-56 h-56 sm:w-72 sm:h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-full lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/b.jpeg') }}" alt="Product Photo B">
                 </div>
             </div>
         </div>
 
         <!-- Slide 3 -->
-        <div class="sa-carousel-slide py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
-                <div class="text-left">
-                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Maximum Muscle & Power</span>
-                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+        <div class="sa-carousel-slide min-h-[580px] sm:min-h-[620px] lg:min-h-0 lg:h-auto py-8 pb-20 sm:py-12 sm:pb-24 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center h-full lg:pl-24">
+                <div class="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-xs sm:text-sm block mb-1.5 lg:mb-2">Maximum Muscle & Power</span>
+                    <h1 class="text-3.5xl sm:text-5xl lg:text-7.5xl tracking-tight font-black uppercase text-white font-sporty leading-none mb-3 lg:mb-4">
                         Reach Your<br><span class="text-red-500">True Potential.</span>
                     </h1>
-                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                    <p class="text-xs sm:text-base text-gray-400 max-w-xl mb-6 lg:mb-8 font-light mx-auto lg:mx-0">
                         Tingkatkan performa latihan dan capai target fisik ideal Anda dengan dukungan konsultasi program dari tim ahli kami.
                     </p>
-                    <div>
-                        <a href="https://wa.me/6285389726874" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                    <div class="flex justify-center lg:justify-start">
+                        <a href="https://wa.me/6285389726874" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm sm:text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition lg:py-4 lg:px-10">
                             Konsultasi via WhatsApp
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-center relative">
-                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
-                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/c.jpg') }}" alt="Product Photo C">
+                <div class="flex justify-center relative order-1 lg:order-2 h-56 sm:h-72 lg:h-auto w-full">
+                    <div class="absolute w-56 h-56 sm:w-72 sm:h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-full lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/c.jpg') }}" alt="Product Photo C">
                 </div>
             </div>
         </div>
 
         <!-- Slide 4 -->
-        <div class="sa-carousel-slide py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-16 lg:pl-20">
-                <div class="text-left">
-                    <span class="text-red-500 font-bold uppercase tracking-wider text-sm block mb-2">Fast, Safe & Secure Delivery</span>
-                    <h1 class="text-5xl tracking-tight font-black uppercase text-white sm:text-6xl md:text-7.5xl font-sporty leading-none mb-4">
+        <div class="sa-carousel-slide min-h-[580px] sm:min-h-[620px] lg:min-h-0 lg:h-auto py-8 pb-20 sm:py-12 sm:pb-24 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center h-full lg:pl-24">
+                <div class="text-center lg:text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <span class="text-red-500 font-bold uppercase tracking-wider text-xs sm:text-sm block mb-1.5 lg:mb-2">Fast, Safe & Secure Delivery</span>
+                    <h1 class="text-3.5xl sm:text-5xl lg:text-7.5xl tracking-tight font-black uppercase text-white font-sporty leading-none mb-3 lg:mb-4">
                         Secure &<br><span class="text-red-500">Safe Shipping.</span>
                     </h1>
-                    <p class="text-base text-gray-400 sm:text-lg max-w-xl mb-8 font-light">
+                    <p class="text-xs sm:text-base text-gray-400 max-w-xl mb-6 lg:mb-8 font-light mx-auto lg:mx-0">
                         Kami mengemas pesanan Anda dengan proteksi ekstra untuk menjamin keamanan hingga sampai ke depan pintu rumah Anda.
                     </p>
-                    <div>
-                        <a href="{{ route('product.index') }}" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition md:py-4 md:px-10">
+                    <div class="flex justify-center lg:justify-start">
+                        <a href="{{ route('product.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm sm:text-base font-bold uppercase rounded-md text-white bg-red-600 hover:bg-red-700 transition lg:py-4 lg:px-10">
                             Pesan Sekarang
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-center relative">
-                    <div class="absolute w-72 h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
-                    <img class="h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/d.jpeg') }}" alt="Product Photo D">
+                <div class="flex justify-center relative order-1 lg:order-2 h-56 sm:h-72 lg:h-auto w-full">
+                    <div class="absolute w-56 h-56 sm:w-72 sm:h-72 bg-red-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
+                    <img class="h-full lg:h-[450px] object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(239,68,68,0.25)] transition duration-500 transform hover:scale-105 filter brightness-95" src="{{ asset('images/d.jpeg') }}" alt="Product Photo D">
                 </div>
             </div>
         </div>
