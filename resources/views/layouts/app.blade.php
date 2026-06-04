@@ -451,6 +451,19 @@
             border-color: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
         }
+        @media (max-width: 1023px) {
+            .sa-carousel-slide {
+                background: radial-gradient(circle at 50% 30%, rgba(153, 27, 27, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+            }
+            .sa-carousel-indicators {
+                left: 50%;
+                top: auto;
+                bottom: 24px;
+                transform: translateX(-50%);
+                flex-direction: row;
+                gap: 12px;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-black text-gray-100 selection:bg-red-600 selection:text-white">
@@ -571,7 +584,7 @@
                 <a href="https://wa.me/6285389726874" style="color:#28a745;font-weight:600;">Order via WhatsApp</a>
                 
                 <!-- Pembatas Menu Mobile Auth -->
-                <div class="border-t border-gray-150 my-2 pt-2"></div>
+                <div class="border-t border-white/10 my-2 pt-2"></div>
                 
                 @auth
                     <a href="{{ route('client.dashboard') }}" style="font-weight: 600;">Dashboard Saya</a>
@@ -584,10 +597,10 @@
                     </form>
                 @else
                     <div class="grid grid-cols-2 gap-2 mt-2 pt-2">
-                        <a href="{{ route('login') }}" class="flex items-center justify-center py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 text-center hover:bg-gray-50">
+                        <a href="{{ route('login') }}" class="flex items-center justify-center py-2 border border-white/10 bg-white/5 rounded-md text-sm font-medium text-gray-300 text-center hover:bg-white/10 transition">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="flex items-center justify-center py-2 border border-blue-600 bg-blue-600 rounded-md text-sm font-medium text-white text-center hover:bg-blue-700">
+                        <a href="{{ route('register') }}" class="flex items-center justify-center py-2 border border-red-600 bg-red-950/20 rounded-md text-sm font-medium text-red-500 text-center hover:bg-red-600 hover:text-white transition">
                             Daftar
                         </a>
                     </div>
