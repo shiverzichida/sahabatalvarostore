@@ -10,25 +10,17 @@
     <link rel="icon" type="image/png" href="{{ asset('images/Sahabat Steroid flat transparent.png') }}">
     
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts and Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
-        .primary-blue { color: #ef4444; }
-        .bg-primary-blue { background-color: #ef4444; }
-        .bg-primary-blue:hover { background-color: #dc2626; }
-        .primary-green { color: #10b981; }
-        .bg-primary-green { background-color: #10b981; }
-        .bg-primary-green:hover { background-color: #059669; }
-
-        .font-sporty {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 0.05em;
-        }
+        .primary-blue { color: #0056b3; }
+        .bg-primary-blue { background-color: #0056b3; }
+        .primary-green { color: #28a745; }
+        .bg-primary-green { background-color: #28a745; }
 
         /* ─── Cart Badge ──────────────────────────────────────────── */
         .sa-cart-btn {
@@ -38,17 +30,16 @@
             justify-content: center;
             width: 42px; height: 42px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f0f7ff;
+            border: 1px solid #dbeafe;
             cursor: pointer;
             transition: all .2s;
         }
         .sa-cart-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #dbeafe;
             transform: scale(1.05);
-            border-color: rgba(239, 68, 68, 0.5);
         }
-        .sa-cart-btn svg { width: 22px; height: 22px; color: #fff; }
+        .sa-cart-btn svg { width: 22px; height: 22px; color: #0056b3; }
         .sa-cart-badge {
             position: absolute;
             top: -6px; right: -6px;
@@ -74,13 +65,13 @@
         #sa-cart-feedback {
             position: fixed;
             top: 80px; right: 20px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #059669, #10b981);
             color: #fff;
             padding: 12px 24px;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 8px 24px rgba(239,68,68,.3);
+            box-shadow: 0 8px 24px rgba(5,150,105,.3);
             transform: translateX(120%);
             transition: transform .4s cubic-bezier(.34,1.56,.64,1);
             z-index: 9999;
@@ -96,8 +87,8 @@
         #sa-cart-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.6);
-            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,.4);
+            backdrop-filter: blur(4px);
             z-index: 998;
             opacity: 0;
             pointer-events: none;
@@ -115,9 +106,8 @@
             width: 420px;
             max-width: 90vw;
             height: 100vh;
-            background: #0f0f0f;
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: -8px 0 40px rgba(0,0,0,.5);
+            background: #fff;
+            box-shadow: -8px 0 40px rgba(0,0,0,.12);
             z-index: 999;
             display: flex;
             flex-direction: column;
@@ -132,12 +122,12 @@
             align-items: center;
             justify-content: space-between;
             padding: 20px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid #e5e7eb;
         }
         .sa-drawer-header h3 {
             font-size: 18px;
             font-weight: 700;
-            color: #fff;
+            color: #111827;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -145,7 +135,7 @@
         .sa-drawer-close {
             width: 36px; height: 36px;
             border: none;
-            background: rgba(255, 255, 255, 0.05);
+            background: #f3f4f6;
             border-radius: 10px;
             cursor: pointer;
             display: flex;
@@ -153,14 +143,13 @@
             justify-content: center;
             transition: background .2s;
         }
-        .sa-drawer-close:hover { background: rgba(255, 255, 255, 0.1); }
-        .sa-drawer-close svg { width: 18px; height: 18px; color: #9ca3af; }
+        .sa-drawer-close:hover { background: #e5e7eb; }
+        .sa-drawer-close svg { width: 18px; height: 18px; color: #6b7280; }
 
         .sa-drawer-body {
             flex: 1;
             overflow-y: auto;
             padding: 16px 24px;
-            background: #0c0c0c;
         }
 
         /* Empty state */
@@ -170,7 +159,7 @@
             align-items: center;
             justify-content: center;
             padding: 60px 20px;
-            color: #4b5563;
+            color: #9ca3af;
             text-align: center;
         }
         #sa-cart-drawer-empty svg { width: 64px; height: 64px; margin-bottom: 16px; opacity: .4; }
@@ -181,7 +170,7 @@
             display: flex;
             gap: 14px;
             padding: 14px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #f3f4f6;
             position: relative;
             animation: sa-item-in .3s ease;
         }
@@ -194,21 +183,21 @@
             border-radius: 10px;
             overflow: hidden;
             flex-shrink: 0;
-            background: #141414;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
         }
         .sa-drawer-item-img img { width: 100%; height: 100%; object-fit: cover; }
         .sa-drawer-item-placeholder {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            color: #4b5563;
+            color: #d1d5db;
         }
         .sa-drawer-item-placeholder svg { width: 28px; height: 28px; }
         .sa-drawer-item-info { flex: 1; min-width: 0; }
         .sa-drawer-item-name {
             font-size: 14px;
             font-weight: 600;
-            color: #fff;
+            color: #111827;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -217,14 +206,14 @@
         .sa-drawer-item-price {
             font-size: 14px;
             font-weight: 700;
-            color: #ef4444;
+            color: #0056b3;
             margin: 0 0 8px 0;
         }
         .sa-drawer-item-qty {
             display: inline-flex;
             align-items: center;
             gap: 0;
-            background: rgba(255, 255, 255, 0.05);
+            background: #f3f4f6;
             border-radius: 8px;
             overflow: hidden;
         }
@@ -235,19 +224,19 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            color: #9ca3af;
+            color: #374151;
             transition: background .15s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .sa-qty-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        .sa-qty-btn:hover { background: #e5e7eb; }
         .sa-drawer-item-qty span {
             width: 32px;
             text-align: center;
             font-size: 14px;
             font-weight: 600;
-            color: #fff;
+            color: #111827;
         }
         .sa-drawer-item-remove {
             position: absolute;
@@ -262,14 +251,14 @@
             border-radius: 6px;
             transition: background .15s;
         }
-        .sa-drawer-item-remove:hover { background: rgba(239, 68, 68, 0.15); }
+        .sa-drawer-item-remove:hover { background: #fee2e2; }
         .sa-drawer-item-remove svg { width: 16px; height: 16px; color: #ef4444; }
 
         /* Drawer footer */
         #sa-cart-drawer-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid #e5e7eb;
             padding: 20px 24px;
-            background: #0f0f0f;
+            background: #fafbfc;
         }
         .sa-drawer-total {
             display: flex;
@@ -279,12 +268,12 @@
         }
         .sa-drawer-total span:first-child {
             font-size: 15px;
-            color: #9ca3af;
+            color: #6b7280;
         }
         .sa-drawer-total span:last-child {
             font-size: 20px;
             font-weight: 800;
-            color: #fff;
+            color: #111827;
         }
         .sa-checkout-btn {
             display: flex;
@@ -295,7 +284,7 @@
             padding: 14px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #0056b3, #003d80);
             color: #fff;
             font-size: 15px;
             font-weight: 700;
@@ -305,7 +294,7 @@
         }
         .sa-checkout-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+            box-shadow: 0 6px 20px rgba(0,86,179,.35);
         }
         .sa-checkout-btn svg { width: 18px; height: 18px; }
 
@@ -318,7 +307,7 @@
             padding: 12px 24px;
             border: none;
             border-radius: 10px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #0056b3, #003d80);
             color: #fff;
             font-size: 15px;
             font-weight: 600;
@@ -327,7 +316,7 @@
         }
         .sa-add-cart-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+            box-shadow: 0 6px 20px rgba(0,86,179,.35);
         }
         .sa-add-cart-btn svg { width: 20px; height: 20px; }
 
@@ -338,13 +327,13 @@
             width: 36px; height: 36px;
             border: none;
             border-radius: 10px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #0056b3, #003d80);
             color: #fff;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 12px rgba(0,86,179,.3);
             transition: all .25s;
             z-index: 2;
             opacity: 0;
@@ -357,25 +346,25 @@
         }
         .sa-add-cart-mini:hover {
             transform: scale(1.1) !important;
-            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+            box-shadow: 0 6px 18px rgba(0,86,179,.45);
         }
         .sa-add-cart-mini svg { width: 18px; height: 18px; }
 
         /* ─── Mobile Menu Styles ──────────────────────────────────── */
         #sa-mobile-menu {
             display: none;
-            background: #0a0a0a;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: #fff;
+            border-top: 1px solid #e5e7eb;
             padding: 12px 16px;
         }
         #sa-mobile-menu.sa-mobile-open { display: block; }
         #sa-mobile-menu a {
             display: block;
             padding: 10px 0;
-            color: #d1d5db;
+            color: #374151;
             font-size: 15px;
             text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #f3f4f6;
         }
         #sa-mobile-menu a:last-child { border-bottom: none; }
         .sa-mobile-submenu {
@@ -383,93 +372,14 @@
         }
         .sa-mobile-submenu a {
             font-size: 14px !important;
-            color: #9ca3af !important;
-        }
-
-        /* ─── Premium Glassmorphism Cards ───────────────────────── */
-        .sa-glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .sa-glass-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(239, 68, 68, 0.3);
-            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
-            transform: translateY(-6px);
-        }
-
-        /* ─── Evolene Style Hero Carousel ───────────────────────── */
-        .sa-carousel-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            background: #080808;
-        }
-        .sa-carousel-wrapper {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            width: 100%;
-        }
-        .sa-carousel-slide {
-            min-width: 100%;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            position: relative;
-            background: radial-gradient(circle at 75% 50%, rgba(153, 27, 27, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
-        }
-        .sa-carousel-indicators {
-            position: absolute;
-            left: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            z-index: 30;
-        }
-        .sa-carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0;
-        }
-        .sa-carousel-dot:hover {
-            background: rgba(255, 255, 255, 0.6);
-        }
-        .sa-carousel-dot.active {
-            background: #ef4444;
-            transform: scale(1.4);
-            border-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
-        }
-        @media (max-width: 1023px) {
-            .sa-carousel-slide {
-                background: radial-gradient(circle at 50% 30%, rgba(153, 27, 27, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
-            }
-            .sa-carousel-indicators {
-                left: 50%;
-                top: auto;
-                bottom: 24px;
-                transform: translateX(-50%);
-                flex-direction: row;
-                gap: 12px;
-            }
+            color: #6b7280 !important;
         }
     </style>
 </head>
-<body class="font-sans antialiased bg-black text-gray-100 selection:bg-red-600 selection:text-white">
-    <div class="min-h-screen flex flex-col bg-[#080808]">
+<body class="font-sans antialiased bg-gray-50 text-gray-900">
+    <div class="min-h-screen flex flex-col">
         <!-- Navigation -->
-        <nav class="bg-black border-b border-white/5 sticky top-0 z-50">
+        <nav class="bg-white shadow-sm sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-20">
                     <div class="flex items-center">
@@ -477,57 +387,57 @@
                             <img src="{{ asset('images/Sahabat Steroid flat transparent.png') }}" alt="Sahabat Alvaro Logo" class="h-12 w-auto">
                         </a>
                         <div class="hidden md:ml-8 md:flex md:space-x-4">
-                            <a href="{{ url('/') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 border-b-2 border-transparent hover:text-red-500 hover:border-red-500 transition">Beranda</a>
+                            <a href="{{ url('/') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 border-transparent hover:border-blue-500">Beranda</a>
                             
                             <!-- About Dropdown -->
-                            <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white cursor-pointer transition">
+                            <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
                                 <span>Tentang Kami</span>
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                                <div class="absolute left-0 top-full mt-0 w-48 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute left-0 top-full mt-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                     <div class="py-1">
-                                        <a href="{{ route('about.summary') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Ringkasan Perusahaan</a>
-                                        <a href="{{ route('about.vision_mission') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Visi & Misi</a>
+                                        <a href="{{ route('about.summary') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Ringkasan Perusahaan</a>
+                                        <a href="{{ route('about.vision_mission') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Visi & Misi</a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Products Dropdown -->
-                            <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white cursor-pointer transition">
-                                <a href="{{ route('product.index') }}" class="flex items-center text-gray-400 hover:text-white">
+                            <div class="relative group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer">
+                                <a href="{{ route('product.index') }}" class="flex items-center">
                                     <span>Produk</span>
                                     <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </a>
-                                <div class="absolute left-0 top-full mt-0 w-56 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute left-0 top-full mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                     <div class="py-1">
-                                        <a href="{{ route('product.index') }}" class="block px-4 py-2 text-sm font-semibold text-white border-b border-white/5 hover:bg-white/5">Semua Produk</a>
+                                        <a href="{{ route('product.index') }}" class="block px-4 py-2 text-sm font-semibold text-gray-900 border-b border-gray-100 hover:bg-gray-100">Semua Produk</a>
                                         @foreach(\App\Models\Category::all() as $category)
-                                            <a href="{{ route('product.category', $category->slug) }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">{{ $category->name }}</a>
+                                            <a href="{{ route('product.category', $category->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ $category->name }}</a>
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
 
-                            <a href="{{ route('verification.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white transition">Verifikasi Produk</a>
-                            <a href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white transition">Artikel Berita</a>
-                            <a href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-400 hover:text-white transition">FAQ</a>
+                            <a href="{{ route('verification.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700">Verifikasi Produk</a>
+                            <a href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700">Artikel Berita</a>
+                            <a href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700">FAQ</a>
                         </div>
                     </div>
                     <div class="hidden md:flex items-center space-x-3">
                         <!-- Client Auth Links -->
                         @auth
                             <!-- Dropdown Menu Pengguna -->
-                            <div class="relative group inline-flex items-center text-sm font-medium text-gray-300 hover:text-red-500 cursor-pointer py-2 transition">
-                                <span>Halo, <strong class="text-white">{{ explode(' ', Auth::user()->name)[0] }}</strong></span>
+                            <div class="relative group inline-flex items-center text-sm font-medium text-gray-600 hover:text-blue-600 cursor-pointer py-2">
+                                <span>Halo, <strong class="text-gray-800">{{ explode(' ', Auth::user()->name)[0] }}</strong></span>
                                 <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 
-                                <div class="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-black border border-zinc-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="absolute right-0 top-full mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                                     <div class="py-1">
-                                        <a href="{{ route('client.dashboard') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Dashboard Saya</a>
-                                        <a href="{{ route('client.calendar') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Jadwal Vitamin</a>
-                                        <hr class="border-white/5 my-1">
+                                        <a href="{{ route('client.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard Saya</a>
+                                        <a href="{{ route('client.calendar') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jadwal Vitamin</a>
+                                        <hr class="border-gray-100 my-1">
                                         <form method="POST" action="{{ route('logout') }}" class="w-full">
                                             @csrf
-                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-950/20 font-medium">
+                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">
                                                 Keluar (Logout)
                                             </button>
                                         </form>
@@ -536,23 +446,23 @@
                             </div>
                         @else
                             <!-- Tombol Masuk & Daftar -->
-                            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-400 hover:text-white transition">
+                            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">
                                 Masuk
                             </a>
-                            <a href="{{ route('register') }}" class="inline-flex items-center px-3.5 py-1.5 border border-red-600 text-sm font-medium rounded-md text-red-500 hover:bg-red-600 hover:text-white transition">
+                            <a href="{{ route('register') }}" class="inline-flex items-center px-3.5 py-1.5 border border-blue-600 text-sm font-medium rounded-md text-blue-600 hover:bg-blue-50 transition">
                                 Daftar
                             </a>
                         @endauth
 
                         <!-- Garis Pemisah Tipis -->
-                        <div class="h-5 w-px bg-white/10 mx-1"></div>
+                        <div class="h-5 w-px bg-gray-200 mx-1"></div>
 
                         <!-- Cart Button -->
                         <button class="sa-cart-btn" onclick="window.SACart && SACart.UI.toggleDrawer()" id="sa-cart-btn-desktop" aria-label="Keranjang Belanja">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
                             <span class="sa-cart-badge">0</span>
                         </button>
-                        <a href="https://wa.me/6285389726874" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-green hover:bg-green-700 transition">
+                        <a href="https://wa.me/6285389726874" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-green hover:bg-green-700">
                             Order via WhatsApp
                         </a>
                     </div>
@@ -584,7 +494,7 @@
                 <a href="https://wa.me/6285389726874" style="color:#28a745;font-weight:600;">Order via WhatsApp</a>
                 
                 <!-- Pembatas Menu Mobile Auth -->
-                <div class="border-t border-white/10 my-2 pt-2"></div>
+                <div class="border-t border-gray-150 my-2 pt-2"></div>
                 
                 @auth
                     <a href="{{ route('client.dashboard') }}" style="font-weight: 600;">Dashboard Saya</a>
@@ -597,10 +507,10 @@
                     </form>
                 @else
                     <div class="grid grid-cols-2 gap-2 mt-2 pt-2">
-                        <a href="{{ route('login') }}" class="flex items-center justify-center py-2 border border-white/10 bg-white/5 rounded-md text-sm font-medium text-gray-300 text-center hover:bg-white/10 transition">
+                        <a href="{{ route('login') }}" class="flex items-center justify-center py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 text-center hover:bg-gray-50">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="flex items-center justify-center py-2 border border-red-600 bg-red-950/20 rounded-md text-sm font-medium text-red-500 text-center hover:bg-red-600 hover:text-white transition">
+                        <a href="{{ route('register') }}" class="flex items-center justify-center py-2 border border-blue-600 bg-blue-600 rounded-md text-sm font-medium text-white text-center hover:bg-blue-700">
                             Daftar
                         </a>
                     </div>
