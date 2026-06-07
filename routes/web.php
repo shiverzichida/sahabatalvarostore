@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Route;
 
 // Frontend Routes
 Route::get('/', function () {
-    return view('home');
+    $products = \App\Models\Product::with('category')
+        ->where('is_active', true)
+        ->latest()
+        ->take(4)
+        ->get();
+    return view('home', compact('products'));
 });
 
 Route::get('/tentang-kami/ringkasan', [AboutController::class, 'summary'])->name('about.summary');

@@ -55,6 +55,33 @@
             <p class="mt-4 text-lg text-gray-500">Lihat lebih dekat kualitas produk unggulan yang kami tawarkan.</p>
         </div>
 
+        @if(isset($products) && $products->count() > 0)
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($products as $product)
+            <div class="group bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition relative flex flex-col justify-between">
+                <a href="{{ route('product.show', $product->slug) }}" class="flex flex-col h-full">
+                    <div class="w-full h-64 bg-gray-100 overflow-hidden relative flex items-center justify-center p-4">
+                        <img src="{{ $product->image ? url('product-images/' . $product->image) : 'https://via.placeholder.com/400' }}" alt="{{ $product->name }}" class="w-full h-full object-contain transform group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">{{ $product->category->name }}</span>
+                            <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $product->name }}</h3>
+                        </div>
+                        <p class="mt-2 text-lg font-bold text-primary-blue">IDR {{ number_format($product->price, 0, ',', '.') }}</p>
+                    </div>
+                </a>
+                <!-- Mini add-to-cart button -->
+                <button class="sa-add-cart-mini"
+                    onclick="event.preventDefault(); event.stopPropagation(); window.SACart && SACart.addItem({id:{{ $product->id }}, name:'{{ addslashes($product->name) }}', slug:'{{ $product->slug }}', price:{{ $product->price }}, image:'{{ $product->image ? url('product-images/' . $product->image) : '' }}', qty:1})"
+                    title="Tambah ke Keranjang"
+                    style="bottom:72px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+            </div>
+            @endforeach
+        </div>
+        @else
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="rounded-lg overflow-hidden shadow-lg border border-gray-200 group bg-gray-100 flex items-center justify-center">
                 <img src="{{ asset('images/a.jpeg') }}" alt="Gallery Image 1" class="w-full h-64 object-contain transform group-hover:scale-105 transition duration-500">
@@ -72,6 +99,7 @@
                 <img src="{{ asset('images/d.jpeg') }}" alt="Gallery Image 4" class="w-full h-64 object-contain transform group-hover:scale-105 transition duration-500">
             </div>
         </div>
+        @endif
     </div>
 </div>
 
